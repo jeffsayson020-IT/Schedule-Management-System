@@ -273,68 +273,83 @@ public class FindMyClassroom extends JFrame {
     // WELCOME SCREEN
     // =====================================
 
-    void welcomeScreen() {
+   void welcomeScreen() {
+    getContentPane().removeAll();
 
-        getContentPane().removeAll();
+    // Main background panel
+    JPanel root = createPanel();
+    root.setLayout(new BorderLayout());
+    root.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
 
-        JPanel panel = createPanel();
+    // Center card
+    JPanel card = new JPanel();
+    card.setBackground(WHITE);
+    card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+    card.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(new Color(220, 226, 235), 1),
+        BorderFactory.createEmptyBorder(30, 35, 30, 35)
+    ));
 
-        panel.setLayout(
-            new BoxLayout(panel, BoxLayout.Y_AXIS)
-        );
+    // Navy banner
+    JPanel banner = new JPanel();
+    banner.setBackground(NAVY);
+    banner.setLayout(new BoxLayout(banner, BoxLayout.Y_AXIS));
+    banner.setBorder(BorderFactory.createEmptyBorder(25, 15, 25, 15));
 
-        // School header
-        JPanel banner = new JPanel(new GridBagLayout());
+    JLabel emblem = new JLabel();
+    emblem.setFont(new Font("Arial", Font.BOLD, 30));
+    emblem.setForeground(GOLD);
+    emblem.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        banner.setBackground(NAVY);
+    JLabel systemTitle = new JLabel("FIND MY CLASSROOM SYSTEM");
+    systemTitle.setFont(new Font("Arial", Font.BOLD, 20));
+    systemTitle.setForeground(WHITE);
+    systemTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        banner.setPreferredSize(
-            new Dimension(750, 120)
-        );
+    banner.add(emblem);
+    banner.add(Box.createVerticalStrut(10));
+    banner.add(systemTitle);
 
-        banner.setMaximumSize(
-            new Dimension(Integer.MAX_VALUE, 120)
-        );
+    // Welcome message
+    JLabel welcome = new JLabel("WELCOME!");
+    welcome.setFont(new Font("Arial", Font.BOLD, 32));
+    welcome.setForeground(NAVY);
+    welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel schoolTitle = new JLabel(
-            "FIND MY CLASSROOM SYSTEM"
-        );
+    JLabel description = new JLabel(
+        "<html><div style='text-align:center;'>"
+        + "Find your class schedule quickly and easily. Stay<br>"
+        + "Organized and never miss your class!"
+        + "</div></html>"
+    );
+    description.setFont(new Font("Arial", Font.PLAIN, 15));
+    description.setForeground(DARK);
+    description.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        schoolTitle.setFont(
-            new Font("Arial", Font.BOLD, 28)
-        );
+    // Get started button
+    JButton startButton = createButton("GET STARTED", BLUE);
+    startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    startButton.addActionListener(e -> mainMenu());
 
-        schoolTitle.setForeground(WHITE);
+    // Add everything to the card
+    card.add(banner);
+    card.add(Box.createVerticalStrut(35));
+    card.add(welcome);
+    card.add(Box.createVerticalStrut(15));
+    card.add(description);
+    card.add(Box.createVerticalStrut(35));
+    card.add(startButton);
 
-        banner.add(schoolTitle);
+    // Center the card
+    JPanel centerPanel = new JPanel(new GridBagLayout());
+    centerPanel.setBackground(root.getBackground());
+    centerPanel.add(card);
 
-        JLabel welcome = createTitle("WELCOME!");
+    root.add(centerPanel, BorderLayout.CENTER);
 
-        JButton nextButton =
-            createButton("GET STARTED", BLUE);
-
-        nextButton.addActionListener(
-            e -> mainMenu()
-        );
-
-        panel.add(Box.createVerticalGlue());
-
-        panel.add(banner);
-
-        panel.add(Box.createVerticalStrut(45));
-
-        panel.add(welcome);
-
-        panel.add(Box.createVerticalStrut(35));
-
-        panel.add(nextButton);
-
-        panel.add(Box.createVerticalGlue());
-
-        add(panel);
-
-        refreshScreen();
-    }
+    add(root);
+    refreshScreen();
+}
 
     // =====================================
     // MAIN MENU
