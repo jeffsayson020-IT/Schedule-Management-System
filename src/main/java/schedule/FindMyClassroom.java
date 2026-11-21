@@ -193,6 +193,19 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
+// SCREEN NAVIGATION
+// =====================================
+
+void changeScreen(JPanel panel) {
+
+    getContentPane().removeAll();
+
+    add(panel);
+
+    refreshScreen();
+}
+
+    // =====================================
     // SAMPLE SCHEDULES
     // =====================================
 
