@@ -186,7 +186,7 @@ public class FindMyClassroom extends JFrame {
     // REFRESH SCREEN
     // =====================================
 
-    void refreshScreen() {
+      void refreshScreen() {
 
         revalidate();
         repaint();
