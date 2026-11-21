@@ -70,84 +70,46 @@ public class FindMyClassroom extends JFrame {
     // BUTTON DESIGN - FIXED VISIBILITY
     // =====================================
 
-    JButton createButton(String text, Color color) {
+   JButton createButton(String text, Color color) {
 
-        JButton button = new JButton(text);
+    JButton button = new JButton(text);
 
-        // Force basic Java button interface
-        button.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+    button.setUI(new javax.swing.plaf.basic.BasicButtonUI());
 
-        button.setFont(new Font("Arial", Font.BOLD, 15));
+    button.setFont(new Font("Arial", Font.BOLD, 16));
+    button.setForeground(WHITE);
+    button.setBackground(color);
 
-        button.setBackground(color);
+    button.setFocusPainted(false);
+    button.setBorder(
+        BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(color.darker(), 1),
+            BorderFactory.createEmptyBorder(8, 15, 8, 15)
+        )
+    );
 
-        // Make all button text readable
-        if (color.equals(GOLD)) {
-            button.setForeground(NAVY);
-        } else {
-            button.setForeground(WHITE);
+    button.setPreferredSize(new Dimension(230, 48));
+    button.setMinimumSize(new Dimension(200, 45));
+    button.setMaximumSize(new Dimension(260, 50));
+
+    button.setAlignmentX(Component.CENTER_ALIGNMENT);
+    button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+    button.addMouseListener(new java.awt.event.MouseAdapter() {
+
+        @Override
+        public void mouseEntered(java.awt.event.MouseEvent e) {
+            button.setBackground(color.brighter());
         }
 
-        // Force button background visibility
-        button.setOpaque(true);
-        button.setContentAreaFilled(true);
-        button.setBorderPainted(true);
-        button.setFocusPainted(false);
-        button.setFocusable(false);
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent e) {
+            button.setBackground(color);
+        }
+    });
 
-        // Visible button border
-        button.setBorder(
-            BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(
-                    color.darker(), 2
-                ),
-                BorderFactory.createEmptyBorder(
-                    10, 20, 10, 20
-                )
-            )
-        );
-
-        // Button size
-        button.setPreferredSize(
-            new Dimension(230, 48)
-        );
-
-        button.setMinimumSize(
-            new Dimension(200, 45)
-        );
-
-        button.setMaximumSize(
-            new Dimension(260, 50)
-        );
-
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        button.setCursor(
-            new Cursor(Cursor.HAND_CURSOR)
-        );
-
-        // Hover effect
-        button.addMouseListener(
-            new java.awt.event.MouseAdapter() {
-
-                @Override
-                public void mouseEntered(
-                    java.awt.event.MouseEvent e
-                ) {
-                    button.setBackground(color.darker());
-                }
-
-                @Override
-                public void mouseExited(
-                    java.awt.event.MouseEvent e
-                ) {
-                    button.setBackground(color);
-                }
-            }
-        );
-
-        return button;
-    }
+    return button;
+}
 
     // =====================================
     // PANEL DESIGN
