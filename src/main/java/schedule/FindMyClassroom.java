@@ -70,7 +70,7 @@ public class FindMyClassroom extends JFrame {
     // BUTTON DESIGN - FIXED VISIBILITY
     // =====================================
 
-   JButton createButton(String text, Color color) {
+  JButton createButton(String text, Color color) {
 
     JButton button = new JButton(text);
 
@@ -322,9 +322,9 @@ public class FindMyClassroom extends JFrame {
         getContentPane().removeAll();
 
         JPanel panel = createPanel();
-
-        panel.setLayout(
-            new BoxLayout(panel, BoxLayout.Y_AXIS)
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(
+            BorderFactory.createEmptyBorder(25, 30, 25, 30)
         );
 
         JLabel title = createTitle("MAIN MENU");
@@ -332,41 +332,20 @@ public class FindMyClassroom extends JFrame {
         JLabel subtitle = new JLabel(
             "Select your account type"
         );
-
-        subtitle.setFont(
-            new Font("Arial", Font.PLAIN, 16)
-        );
-
+        subtitle.setFont(new Font("Arial", Font.PLAIN, 16));
         subtitle.setForeground(DARK);
-
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton studentButton =
-            createButton("STUDENT", BLUE);
+        JButton studentButton = createButton("STUDENT", BLUE);
+        JButton adminButton = createButton("ADMIN", NAVY);
+        JButton facultyButton = createButton("FACULTY", GOLD);
+        JButton exitButton = createButton("EXIT", RED);
 
-        JButton adminButton =
-            createButton("ADMIN", NAVY);
-
-        JButton facultyButton =
-            createButton("FACULTY", GOLD);
-
-        JButton exitButton =
-            createButton("EXIT", RED);
-
-        studentButton.addActionListener(
-            e -> studentScreen()
-        );
-
-        adminButton.addActionListener(
-            e -> adminLogin()
-        );
-
-        facultyButton.addActionListener(
-            e -> facultyLogin()
-        );
+        studentButton.addActionListener(e -> studentScreen());
+        adminButton.addActionListener(e -> adminLogin());
+        facultyButton.addActionListener(e -> facultyLogin());
 
         exitButton.addActionListener(e -> {
-
             int confirm = JOptionPane.showConfirmDialog(
                 this,
                 "Are you sure you want to exit?",
@@ -382,24 +361,19 @@ public class FindMyClassroom extends JFrame {
         panel.add(Box.createVerticalGlue());
 
         panel.add(title);
-
-        panel.add(Box.createVerticalStrut(10));
+        panel.add(Box.createVerticalStrut(12));
 
         panel.add(subtitle);
-
-        panel.add(Box.createVerticalStrut(35));
+        panel.add(Box.createVerticalStrut(40));
 
         panel.add(studentButton);
-
-        panel.add(Box.createVerticalStrut(15));
+        panel.add(Box.createVerticalStrut(18));
 
         panel.add(adminButton);
-
-        panel.add(Box.createVerticalStrut(15));
+        panel.add(Box.createVerticalStrut(18));
 
         panel.add(facultyButton);
-
-        panel.add(Box.createVerticalStrut(15));
+        panel.add(Box.createVerticalStrut(18));
 
         panel.add(exitButton);
 
