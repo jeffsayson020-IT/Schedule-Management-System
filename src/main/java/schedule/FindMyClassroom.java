@@ -11,14 +11,15 @@ public class FindMyClassroom extends JFrame {
     // SCHOOL COLOR THEME
     // =====================================
 
-    static final Color NAVY = new Color(23, 54, 93);
-    static final Color BLUE = new Color(40, 120, 200);
-    static final Color GOLD = new Color(242, 193, 78);
-    static final Color LIGHT = new Color(244, 247, 251);
-    static final Color WHITE = Color.WHITE;
-    static final Color DARK = new Color(40, 50, 65);
-    static final Color GREEN = new Color(46, 139, 87);
-    static final Color RED = new Color(190, 65, 65);
+   static final Color NAVY = new Color(23, 54, 93);
+static final Color BLUE = new Color(40, 120, 200);
+static final Color GOLD = new Color(242, 193, 78);
+static final Color LIGHT = new Color(244, 247, 251);
+static final Color WHITE = Color.WHITE;
+static final Color DARK = new Color(40, 50, 65);
+static final Color GREEN = new Color(46, 139, 87);
+static final Color RED = new Color(190, 65, 65);
+static final Color BORDER = new Color(220, 226, 235);
 
     // =====================================
     // SCHEDULE DATA
