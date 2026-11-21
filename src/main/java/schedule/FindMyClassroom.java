@@ -71,6 +71,7 @@ static final Color BORDER = new Color(220, 226, 235);
     // BUTTON DESIGN - FIXED VISIBILITY
     // =====================================
 
+
   JButton createButton(String text, Color color) {
 
     JButton button = new JButton(text);
