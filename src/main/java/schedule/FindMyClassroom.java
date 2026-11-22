@@ -509,11 +509,6 @@ void changeScreen(JPanel panel) {
     // STUDENT SCHEDULE
     // =====================================
 
-   
-    // =====================================
-    // STUDENT SCHEDULE - COMMIT 12
-    // =====================================
-
     void showStudentSchedule(String name, String section) {
 
         getContentPane().removeAll();
