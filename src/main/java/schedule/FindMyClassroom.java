@@ -744,125 +744,71 @@ public class FindMyClassroom extends JFrame {
 
     void adminLogin() {
 
-        JTextField usernameField = new JTextField(15);
+    JPanel panel = new JPanel(new GridLayout(3, 2, 10, 12));
+    panel.setBackground(LIGHT);
+    panel.setBorder(
+        BorderFactory.createEmptyBorder(15, 20, 15, 20)
+    );
 
-        JPasswordField passwordField =
-            new JPasswordField(15);
+    JLabel title = new JLabel("ADMIN LOGIN");
+    title.setFont(new Font("Arial", Font.BOLD, 20));
+    title.setForeground(NAVY);
 
-        Object[] fields = {
-            "Username:",
-            usernameField,
-            "Password:",
-            passwordField
-        };
+    JLabel usernameLabel = new JLabel("Username:");
+    usernameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+    usernameLabel.setForeground(DARK);
 
-        int result = JOptionPane.showConfirmDialog(
-            this,
-            fields,
-            "ADMIN LOGIN",
-            JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE
-        );
+    JTextField usernameField = new JTextField(15);
+    usernameField.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        if (result == JOptionPane.OK_OPTION) {
+    JLabel passwordLabel = new JLabel("Password:");
+    passwordLabel.setFont(new Font("Arial", Font.BOLD, 14));
+    passwordLabel.setForeground(DARK);
 
-            String username =
-                usernameField.getText();
+    JPasswordField passwordField = new JPasswordField(15);
+    passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
 
-            String password =
-                new String(passwordField.getPassword());
+    panel.add(title);
+    panel.add(new JLabel(""));
+    panel.add(usernameLabel);
+    panel.add(usernameField);
+    panel.add(passwordLabel);
+    panel.add(passwordField);
 
-            if (username.equals(ADMIN_USERNAME)
-                    && password.equals(ADMIN_PASSWORD)) {
+    int result = JOptionPane.showConfirmDialog(
+        this,
+        panel,
+        "ADMIN LOGIN",
+        JOptionPane.OK_CANCEL_OPTION,
+        JOptionPane.PLAIN_MESSAGE
+    );
 
-                adminMenu();
+    if (result == JOptionPane.OK_OPTION) {
 
-            } else {
+        String username = usernameField.getText().trim();
+        String password = new String(passwordField.getPassword());
 
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Incorrect username or password.",
-                    "LOGIN FAILED",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            }
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter your username and password.",
+                "MISSING INFORMATION",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        if (username.equals("admin") && password.equals("admin123")) {
+            adminMenu();
+        } else {
+            JOptionPane.showMessageDialog(
+                this,
+                "Incorrect username or password.",
+                "LOGIN FAILED",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }
-
-    // =====================================
-    // ADMIN MENU
-    // =====================================
-
-    void adminMenu() {
-
-        getContentPane().removeAll();
-
-        JPanel panel = createPanel();
-
-        panel.setLayout(
-            new BoxLayout(panel, BoxLayout.Y_AXIS)
-        );
-
-        JLabel title = createTitle("ADMIN MENU");
-
-        JLabel subtitle = new JLabel(
-            "Manage classroom schedules"
-        );
-
-        subtitle.setFont(
-            new Font("Arial", Font.PLAIN, 16)
-        );
-
-        subtitle.setForeground(DARK);
-
-        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JButton viewButton =
-            createButton("VIEW SCHEDULES", NAVY);
-
-        JButton editButton =
-            createButton("EDIT SCHEDULES", GOLD);
-
-        JButton backButton =
-            createButton("BACK TO MAIN MENU", RED);
-
-        viewButton.addActionListener(
-            e -> viewSchedules()
-        );
-
-        editButton.addActionListener(
-            e -> editSchedules()
-        );
-
-        backButton.addActionListener(
-            e -> mainMenu()
-        );
-
-        panel.add(Box.createVerticalGlue());
-
-        panel.add(title);
-
-        panel.add(Box.createVerticalStrut(10));
-
-        panel.add(subtitle);
-
-        panel.add(Box.createVerticalStrut(35));
-
-        panel.add(viewButton);
-
-        panel.add(Box.createVerticalStrut(15));
-
-        panel.add(editButton);
-
-        panel.add(Box.createVerticalStrut(15));
-
-        panel.add(backButton);
-
-        panel.add(Box.createVerticalGlue());
-
-        add(panel);
-
-        refreshScreen();
     }
 
     // =====================================
