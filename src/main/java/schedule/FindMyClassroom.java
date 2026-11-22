@@ -618,41 +618,62 @@ void changeScreen(JPanel panel) {
     // FACULTY LOGIN
     // =====================================
 
-    void facultyLogin() {
+   
+void facultyLogin() {
 
-        JTextField nameField = new JTextField(20);
+    JPanel panel = new JPanel(new GridLayout(3, 1, 10, 10));
+    panel.setBackground(LIGHT);
+    panel.setBorder(
+        BorderFactory.createEmptyBorder(15, 20, 15, 20)
+    );
 
-        Object[] fields = {
-            "Enter Faculty Name:",
-            nameField
-        };
+    JLabel title = new JLabel(
+        "FACULTY LOGIN",
+        SwingConstants.CENTER
+    );
+    title.setFont(new Font("Arial", Font.BOLD, 20));
+    title.setForeground(NAVY);
 
-        int result = JOptionPane.showConfirmDialog(
-            this,
-            fields,
-            "FACULTY LOGIN",
-            JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE
-        );
+    JLabel instruction = new JLabel(
+        "Enter your faculty name to view your schedule.",
+        SwingConstants.CENTER
+    );
+    instruction.setFont(new Font("Arial", Font.PLAIN, 13));
+    instruction.setForeground(DARK);
 
-        if (result == JOptionPane.OK_OPTION) {
+    JTextField facultyField = new JTextField();
+    facultyField.setFont(new Font("Arial", Font.PLAIN, 15));
 
-            String facultyName =
-                nameField.getText().trim();
+    panel.add(title);
+    panel.add(instruction);
+    panel.add(facultyField);
 
-            if (facultyName.isEmpty()) {
+    int result = JOptionPane.showConfirmDialog(
+        this,
+        panel,
+        "FACULTY LOGIN",
+        JOptionPane.OK_CANCEL_OPTION,
+        JOptionPane.PLAIN_MESSAGE
+    );
 
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter your faculty name."
-                );
+    if (result == JOptionPane.OK_OPTION) {
 
-                return;
-            }
+        String facultyName = facultyField.getText().trim();
 
-            showFacultySchedule(facultyName);
+        if (facultyName.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter your faculty name.",
+                "MISSING INFORMATION",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
         }
+
+        showFacultySchedule(facultyName);
     }
+}
+
 
     // =====================================
     // FACULTY SCHEDULE
