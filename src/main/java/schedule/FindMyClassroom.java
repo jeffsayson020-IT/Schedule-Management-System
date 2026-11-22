@@ -1004,59 +1004,86 @@ public class FindMyClassroom extends JFrame {
 
     void addSchedule() {
 
-        JTextField subject = new JTextField(15);
-        JTextField teacher = new JTextField(15);
-        JTextField section = new JTextField(15);
-        JTextField time = new JTextField(15);
-        JTextField room = new JTextField(15);
+        JTextField subjectField = new JTextField(18);
+        JTextField teacherField = new JTextField(18);
+        JTextField sectionField = new JTextField(18);
+        JTextField timeField = new JTextField(18);
+        JTextField roomField = new JTextField(18);
 
-        Object[] fields = {
-            "Subject:", subject,
-            "Teacher:", teacher,
-            "Section:", section,
-            "Time:", time,
-            "Room:", room
+        JTextField[] fields = {
+            subjectField, teacherField, sectionField,
+            timeField, roomField
         };
+
+        for (JTextField field : fields) {
+            field.setFont(new Font("Arial", Font.PLAIN, 14));
+        }
+
+        JLabel[] labels = {
+            new JLabel("Subject:"),
+            new JLabel("Teacher:"),
+            new JLabel("Section:"),
+            new JLabel("Time:"),
+            new JLabel("Room:")
+        };
+
+        for (JLabel label : labels) {
+            label.setFont(new Font("Arial", Font.BOLD, 14));
+            label.setForeground(DARK);
+        }
+
+        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
+        panel.setBackground(LIGHT);
+        panel.setBorder(
+            BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        );
+
+        for (int i = 0; i < labels.length; i++) {
+            panel.add(labels[i]);
+            panel.add(fields[i]);
+        }
 
         int result = JOptionPane.showConfirmDialog(
             this,
-            fields,
+            panel,
             "ADD SCHEDULE",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE
         );
 
-        if (result == JOptionPane.OK_OPTION) {
+        if (result != JOptionPane.OK_OPTION) {
+            return;
+        }
 
-            if (subject.getText().trim().isEmpty()
-                    || teacher.getText().trim().isEmpty()
-                    || section.getText().trim().isEmpty()
-                    || time.getText().trim().isEmpty()
-                    || room.getText().trim().isEmpty()) {
+        String subject = subjectField.getText().trim();
+        String teacher = teacherField.getText().trim();
+        String section = sectionField.getText().trim();
+        String time = timeField.getText().trim();
+        String room = roomField.getText().trim();
 
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Please complete all fields."
-                );
-
-                return;
-            }
-
-            schedules.add(new Schedule(
-                subject.getText().trim(),
-                teacher.getText().trim(),
-                section.getText().trim(),
-                time.getText().trim(),
-                room.getText().trim()
-            ));
+        if (subject.isEmpty() || teacher.isEmpty()
+                || section.isEmpty() || time.isEmpty()
+                || room.isEmpty()) {
 
             JOptionPane.showMessageDialog(
                 this,
-                "Schedule added successfully!",
-                "SUCCESS",
-                JOptionPane.INFORMATION_MESSAGE
+                "Please complete all schedule fields.",
+                "MISSING INFORMATION",
+                JOptionPane.WARNING_MESSAGE
             );
+            return;
         }
+
+        schedules.add(
+            new Schedule(subject, teacher, section, time, room)
+        );
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Schedule added successfully!",
+            "SUCCESS",
+            JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     // =====================================
