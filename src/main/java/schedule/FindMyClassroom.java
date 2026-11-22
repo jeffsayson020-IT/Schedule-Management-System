@@ -223,7 +223,7 @@ void changeScreen(JPanel panel) {
 
         schedules.add(new Schedule(
             "Programming",
-            "Ms. Cruz",
+            "Ms. Mendoza",
             "BSIT 2A",
             "10:00 AM",
             "Room 205"
@@ -232,7 +232,7 @@ void changeScreen(JPanel panel) {
         schedules.add(new Schedule(
             "Networking",
             "Mr. Reyes",
-            "BSIT 2A",
+            "BSIT 05",
             "1:00 PM",
             "Room 102"
         ));
