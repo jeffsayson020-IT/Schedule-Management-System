@@ -403,12 +403,16 @@ void changeScreen(JPanel panel) {
     // STUDENT SCREEN
     // =====================================
 
+    
+    // =====================================
+    // STUDENT SCREEN - COMMIT 11
+    // =====================================
+
     void studentScreen() {
 
         getContentPane().removeAll();
 
         JPanel panel = createPanel();
-
         panel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -418,19 +422,29 @@ void changeScreen(JPanel panel) {
 
         JLabel title = createTitle("STUDENT INFORMATION");
 
-        JLabel nameLabel = new JLabel("Enter Name:");
+        JLabel subtitle = new JLabel(
+            "Enter your information to find your class schedule"
+        );
+        subtitle.setFont(new Font("Arial", Font.PLAIN, 14));
+        subtitle.setForeground(DARK);
+        subtitle.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel nameLabel = new JLabel("Student Name:");
+        nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        nameLabel.setForeground(DARK);
 
         JTextField nameField = new JTextField(20);
+        nameField.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        JLabel sectionLabel = new JLabel("Enter Section:");
+        JLabel sectionLabel = new JLabel("Section:");
+        sectionLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        sectionLabel.setForeground(DARK);
 
         JTextField sectionField = new JTextField(20);
+        sectionField.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        JButton searchButton =
-            createButton("SEARCH", BLUE);
-
-        JButton backButton =
-            createButton("BACK", NAVY);
+        JButton searchButton = createButton("SEARCH", BLUE);
+        JButton backButton = createButton("BACK", NAVY);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -438,46 +452,44 @@ void changeScreen(JPanel panel) {
 
         panel.add(title, gbc);
 
+        gbc.gridy = 1;
+        panel.add(subtitle, gbc);
+
         gbc.gridwidth = 1;
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
-
+        gbc.gridy = 2;
         panel.add(nameLabel, gbc);
 
         gbc.gridx = 1;
-
         panel.add(nameField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
-
+        gbc.gridy = 3;
         panel.add(sectionLabel, gbc);
 
         gbc.gridx = 1;
-
         panel.add(sectionField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
-
+        gbc.gridy = 4;
         panel.add(searchButton, gbc);
 
         gbc.gridx = 1;
-
         panel.add(backButton, gbc);
 
         searchButton.addActionListener(e -> {
 
             String name = nameField.getText().trim();
-
             String section = sectionField.getText().trim();
 
             if (name.isEmpty() || section.isEmpty()) {
 
                 JOptionPane.showMessageDialog(
                     this,
-                    "Please enter your name and section."
+                    "Please enter your name and section.",
+                    "MISSING INFORMATION",
+                    JOptionPane.WARNING_MESSAGE
                 );
 
                 return;
@@ -486,9 +498,7 @@ void changeScreen(JPanel panel) {
             showStudentSchedule(name, section);
         });
 
-        backButton.addActionListener(
-            e -> mainMenu()
-        );
+        backButton.addActionListener(e -> mainMenu());
 
         add(panel);
 
