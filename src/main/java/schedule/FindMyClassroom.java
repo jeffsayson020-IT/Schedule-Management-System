@@ -54,18 +54,20 @@ public class FindMyClassroom extends JFrame {
     // CONSTRUCTOR
     // =====================================
 
-    public FindMyClassroom() {
+    FindMyClassroom() {
+    setTitle("Find My Classroom System");
+    setSize(900, 600);
+    setMinimumSize(new Dimension(700, 500));
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLocationRelativeTo(null);
+    setLayout(new BorderLayout());
 
-        setTitle("Find My Classroom System");
-        setSize(750, 550);
-        setMinimumSize(new Dimension(650, 480));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+    addSampleSchedules();
 
-        getContentPane().setBackground(LIGHT);
+    welcomeScreen();
 
-        welcomeScreen();
-    }
+    setVisible(true);
+}
 
     // =====================================
     // BUTTON DESIGN - FIXED VISIBILITY
