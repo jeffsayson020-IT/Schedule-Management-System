@@ -1074,16 +1074,43 @@ public class FindMyClassroom extends JFrame {
             return;
         }
 
-        schedules.add(
-            new Schedule(subject, teacher, section, time, room)
-        );
+        boolean duplicateFound = false;
 
-        JOptionPane.showMessageDialog(
-            this,
-            "Schedule added successfully!",
-            "SUCCESS",
-            JOptionPane.INFORMATION_MESSAGE
-        );
+for (Schedule s : schedules) {
+
+    if (s.subject.equalsIgnoreCase(subject)
+            && s.teacher.equalsIgnoreCase(teacher)
+            && s.section.equalsIgnoreCase(section)
+            && s.time.equalsIgnoreCase(time)
+            && s.room.equalsIgnoreCase(room)) {
+
+        duplicateFound = true;
+        break;
+    }
+}
+
+if (duplicateFound) {
+
+    JOptionPane.showMessageDialog(
+        this,
+        "This schedule already exists. Please enter different schedule information.",
+        "DUPLICATE SCHEDULE",
+        JOptionPane.WARNING_MESSAGE
+    );
+
+    return;
+}
+
+schedules.add(
+    new Schedule(subject, teacher, section, time, room)
+);
+
+JOptionPane.showMessageDialog(
+    this,
+    "Schedule added successfully!",
+    "SUCCESS",
+    JOptionPane.INFORMATION_MESSAGE
+);
     }
 
     // =====================================
