@@ -1230,70 +1230,81 @@ public class FindMyClassroom extends JFrame {
     void deleteSchedule() {
 
         if (schedules.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "There are no schedules available to delete.",
+                "NO SCHEDULES",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        String[] scheduleOptions = new String[schedules.size()];
+
+        for (int i = 0; i < schedules.size(); i++) {
+            Schedule s = schedules.get(i);
+
+            scheduleOptions[i] = s.subject + " - "
+                    + s.section + " - "
+                    + s.teacher;
+        }
+
+        JComboBox<String> scheduleBox =
+                new JComboBox<>(scheduleOptions);
+
+        JPanel panel = new JPanel(new GridLayout(2, 1, 10, 10));
+        panel.setBackground(LIGHT);
+
+        JLabel instruction = new JLabel("Select the schedule to delete:");
+        instruction.setFont(new Font("Arial", Font.BOLD, 14));
+        instruction.setForeground(NAVY);
+
+        scheduleBox.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        panel.add(instruction);
+        panel.add(scheduleBox);
+
+        int result = JOptionPane.showConfirmDialog(
+            this,
+            panel,
+            "DELETE SCHEDULE",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (result != JOptionPane.OK_OPTION) {
+            return;
+        }
+
+        int selectedIndex = scheduleBox.getSelectedIndex();
+
+        if (selectedIndex < 0) {
+            return;
+        }
+
+        Schedule selectedSchedule = schedules.get(selectedIndex);
+
+        int confirmation = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to delete this schedule?\n\n"
+                + "Subject: " + selectedSchedule.subject + "\n"
+                + "Section: " + selectedSchedule.section + "\n"
+                + "Teacher: " + selectedSchedule.teacher,
+            "CONFIRM DELETE",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirmation == JOptionPane.YES_OPTION) {
+
+            schedules.remove(selectedIndex);
 
             JOptionPane.showMessageDialog(
                 this,
-                "No schedules available."
+                "Schedule deleted successfully!",
+                "DELETE SUCCESSFUL",
+                JOptionPane.INFORMATION_MESSAGE
             );
-
-            return;
-        }
-
-        String[] scheduleList =
-            new String[schedules.size()];
-
-        for (int i = 0; i < schedules.size(); i++) {
-
-            Schedule s = schedules.get(i);
-
-            scheduleList[i] =
-                s.subject + " - "
-                + s.section + " - "
-                + s.room;
-        }
-
-        String selected =
-            (String) JOptionPane.showInputDialog(
-                this,
-                "Select schedule to delete:",
-                "DELETE SCHEDULE",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                scheduleList,
-                scheduleList[0]
-            );
-
-        if (selected == null) {
-            return;
-        }
-
-        for (int i = 0; i < scheduleList.length; i++) {
-
-            if (scheduleList[i].equals(selected)) {
-
-                int confirm = JOptionPane.showConfirmDialog(
-                    this,
-                    "Are you sure you want to delete "
-                    + selected + "?",
-                    "CONFIRM DELETE",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE
-                );
-
-                if (confirm == JOptionPane.YES_OPTION) {
-
-                    schedules.remove(i);
-
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "Schedule deleted successfully!",
-                        "SUCCESS",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
-                }
-
-                break;
-            }
         }
     }
 
