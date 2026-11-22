@@ -11,15 +11,14 @@ public class FindMyClassroom extends JFrame {
     // SCHOOL COLOR THEME
     // =====================================
 
-   static final Color NAVY = new Color(23, 54, 93);
-static final Color BLUE = new Color(40, 120, 200);
-static final Color GOLD = new Color(242, 193, 78);
-static final Color LIGHT = new Color(244, 247, 251);
-static final Color WHITE = Color.WHITE;
-static final Color DARK = new Color(40, 50, 65);
-static final Color GREEN = new Color(46, 139, 87);
-static final Color RED = new Color(190, 65, 65);
-static final Color BORDER = new Color(220, 226, 235);
+    static final Color NAVY = new Color(23, 54, 93);
+    static final Color BLUE = new Color(40, 120, 200);
+    static final Color GOLD = new Color(242, 193, 78);
+    static final Color LIGHT = new Color(244, 247, 251);
+    static final Color WHITE = Color.WHITE;
+    static final Color DARK = new Color(40, 50, 65);
+    static final Color GREEN = new Color(46, 139, 87);
+    static final Color RED = new Color(190, 65, 65);
 
     // =====================================
     // SCHEDULE DATA
@@ -71,47 +70,84 @@ static final Color BORDER = new Color(220, 226, 235);
     // BUTTON DESIGN - FIXED VISIBILITY
     // =====================================
 
+    JButton createButton(String text, Color color) {
 
-  JButton createButton(String text, Color color) {
+        JButton button = new JButton(text);
 
-    JButton button = new JButton(text);
+        // Force basic Java button interface
+        button.setUI(new javax.swing.plaf.basic.BasicButtonUI());
 
-    button.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        button.setFont(new Font("Arial", Font.BOLD, 15));
 
-    button.setFont(new Font("Arial", Font.BOLD, 16));
-    button.setForeground(WHITE);
-    button.setBackground(color);
+        button.setBackground(color);
 
-    button.setFocusPainted(false);
-    button.setBorder(
-        BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(color.darker(), 1),
-            BorderFactory.createEmptyBorder(8, 15, 8, 15)
-        )
-    );
-
-    button.setPreferredSize(new Dimension(230, 48));
-    button.setMinimumSize(new Dimension(200, 45));
-    button.setMaximumSize(new Dimension(260, 50));
-
-    button.setAlignmentX(Component.CENTER_ALIGNMENT);
-    button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-    button.addMouseListener(new java.awt.event.MouseAdapter() {
-
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent e) {
-            button.setBackground(color.brighter());
+        // Make all button text readable
+        if (color.equals(GOLD)) {
+            button.setForeground(NAVY);
+        } else {
+            button.setForeground(WHITE);
         }
 
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent e) {
-            button.setBackground(color);
-        }
-    });
+        // Force button background visibility
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.setBorderPainted(true);
+        button.setFocusPainted(false);
+        button.setFocusable(false);
 
-    return button;
-}
+        // Visible button border
+        button.setBorder(
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(
+                    color.darker(), 2
+                ),
+                BorderFactory.createEmptyBorder(
+                    10, 20, 10, 20
+                )
+            )
+        );
+
+        // Button size
+        button.setPreferredSize(
+            new Dimension(230, 48)
+        );
+
+        button.setMinimumSize(
+            new Dimension(200, 45)
+        );
+
+        button.setMaximumSize(
+            new Dimension(260, 50)
+        );
+
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        button.setCursor(
+            new Cursor(Cursor.HAND_CURSOR)
+        );
+
+        // Hover effect
+        button.addMouseListener(
+            new java.awt.event.MouseAdapter() {
+
+                @Override
+                public void mouseEntered(
+                    java.awt.event.MouseEvent e
+                ) {
+                    button.setBackground(color.darker());
+                }
+
+                @Override
+                public void mouseExited(
+                    java.awt.event.MouseEvent e
+                ) {
+                    button.setBackground(color);
+                }
+            }
+        );
+
+        return button;
+    }
 
     // =====================================
     // PANEL DESIGN
@@ -188,24 +224,11 @@ static final Color BORDER = new Color(220, 226, 235);
     // REFRESH SCREEN
     // =====================================
 
-      void refreshScreen() {
+    void refreshScreen() {
 
         revalidate();
         repaint();
     }
-
-    // =====================================
-// SCREEN NAVIGATION
-// =====================================
-
-void changeScreen(JPanel panel) {
-
-    getContentPane().removeAll();
-
-    add(panel);
-
-    refreshScreen();
-}
 
     // =====================================
     // SAMPLE SCHEDULES
@@ -215,7 +238,7 @@ void changeScreen(JPanel panel) {
 
         schedules.add(new Schedule(
             "Database Management",
-            "Mr. Perez",
+            "Mr. Santos",
             "BSIT 2A",
             "8:00 AM",
             "Room 304"
@@ -223,7 +246,7 @@ void changeScreen(JPanel panel) {
 
         schedules.add(new Schedule(
             "Programming",
-            "Ms. Mendoza",
+            "Ms. Cruz",
             "BSIT 2A",
             "10:00 AM",
             "Room 205"
@@ -232,14 +255,14 @@ void changeScreen(JPanel panel) {
         schedules.add(new Schedule(
             "Networking",
             "Mr. Reyes",
-            "BSIT 05",
+            "BSIT 2A",
             "1:00 PM",
             "Room 102"
         ));
 
         schedules.add(new Schedule(
             "Web Development",
-            "Mr. Garcia",
+            "Ms. Garcia",
             "BSIT 2B",
             "9:00 AM",
             "Room 201"
@@ -250,83 +273,68 @@ void changeScreen(JPanel panel) {
     // WELCOME SCREEN
     // =====================================
 
-   void welcomeScreen() {
-    getContentPane().removeAll();
+    void welcomeScreen() {
 
-    // Main background panel
-    JPanel root = createPanel();
-    root.setLayout(new BorderLayout());
-    root.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
+        getContentPane().removeAll();
 
-    // Center card
-    JPanel card = new JPanel();
-    card.setBackground(WHITE);
-    card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-    card.setBorder(BorderFactory.createCompoundBorder(
-        BorderFactory.createLineBorder(new Color(220, 226, 235), 1),
-        BorderFactory.createEmptyBorder(30, 35, 30, 35)
-    ));
+        JPanel panel = createPanel();
 
-    // Navy banner
-    JPanel banner = new JPanel();
-    banner.setBackground(NAVY);
-    banner.setLayout(new BoxLayout(banner, BoxLayout.Y_AXIS));
-    banner.setBorder(BorderFactory.createEmptyBorder(25, 15, 25, 15));
+        panel.setLayout(
+            new BoxLayout(panel, BoxLayout.Y_AXIS)
+        );
 
-    JLabel emblem = new JLabel();
-    emblem.setFont(new Font("Arial", Font.BOLD, 30));
-    emblem.setForeground(GOLD);
-    emblem.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // School header
+        JPanel banner = new JPanel(new GridBagLayout());
 
-    JLabel systemTitle = new JLabel("FIND MY CLASSROOM SYSTEM");
-    systemTitle.setFont(new Font("Arial", Font.BOLD, 20));
-    systemTitle.setForeground(WHITE);
-    systemTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        banner.setBackground(NAVY);
 
-    banner.add(emblem);
-    banner.add(Box.createVerticalStrut(10));
-    banner.add(systemTitle);
+        banner.setPreferredSize(
+            new Dimension(750, 120)
+        );
 
-    // Welcome message
-    JLabel welcome = new JLabel("WELCOME!");
-    welcome.setFont(new Font("Arial", Font.BOLD, 32));
-    welcome.setForeground(NAVY);
-    welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
+        banner.setMaximumSize(
+            new Dimension(Integer.MAX_VALUE, 120)
+        );
 
-    JLabel description = new JLabel(
-        "<html><div style='text-align:center;'>"
-        + "Find your class schedule quickly and easily. Stay<br>"
-        + "Organized and never miss your class!"
-        + "</div></html>"
-    );
-    description.setFont(new Font("Arial", Font.PLAIN, 15));
-    description.setForeground(DARK);
-    description.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel schoolTitle = new JLabel(
+            "FIND MY CLASSROOM SYSTEM"
+        );
 
-    // Get started button
-    JButton startButton = createButton("GET STARTED", BLUE);
-    startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-    startButton.addActionListener(e -> mainMenu());
+        schoolTitle.setFont(
+            new Font("Arial", Font.BOLD, 28)
+        );
 
-    // Add everything to the card
-    card.add(banner);
-    card.add(Box.createVerticalStrut(35));
-    card.add(welcome);
-    card.add(Box.createVerticalStrut(15));
-    card.add(description);
-    card.add(Box.createVerticalStrut(35));
-    card.add(startButton);
+        schoolTitle.setForeground(WHITE);
 
-    // Center the card
-    JPanel centerPanel = new JPanel(new GridBagLayout());
-    centerPanel.setBackground(root.getBackground());
-    centerPanel.add(card);
+        banner.add(schoolTitle);
 
-    root.add(centerPanel, BorderLayout.CENTER);
+        JLabel welcome = createTitle("WELCOME!");
 
-    add(root);
-    refreshScreen();
-}
+        JButton nextButton =
+            createButton("GET STARTED", BLUE);
+
+        nextButton.addActionListener(
+            e -> mainMenu()
+        );
+
+        panel.add(Box.createVerticalGlue());
+
+        panel.add(banner);
+
+        panel.add(Box.createVerticalStrut(45));
+
+        panel.add(welcome);
+
+        panel.add(Box.createVerticalStrut(35));
+
+        panel.add(nextButton);
+
+        panel.add(Box.createVerticalGlue());
+
+        add(panel);
+
+        refreshScreen();
+    }
 
     // =====================================
     // MAIN MENU
@@ -337,9 +345,9 @@ void changeScreen(JPanel panel) {
         getContentPane().removeAll();
 
         JPanel panel = createPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(
-            BorderFactory.createEmptyBorder(25, 30, 25, 30)
+
+        panel.setLayout(
+            new BoxLayout(panel, BoxLayout.Y_AXIS)
         );
 
         JLabel title = createTitle("MAIN MENU");
@@ -347,20 +355,41 @@ void changeScreen(JPanel panel) {
         JLabel subtitle = new JLabel(
             "Select your account type"
         );
-        subtitle.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        subtitle.setFont(
+            new Font("Arial", Font.PLAIN, 16)
+        );
+
         subtitle.setForeground(DARK);
+
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton studentButton = createButton("STUDENT", BLUE);
-        JButton adminButton = createButton("ADMIN", NAVY);
-        JButton facultyButton = createButton("FACULTY", GOLD);
-        JButton exitButton = createButton("EXIT", RED);
+        JButton studentButton =
+            createButton("STUDENT", BLUE);
 
-        studentButton.addActionListener(e -> studentScreen());
-        adminButton.addActionListener(e -> adminLogin());
-        facultyButton.addActionListener(e -> facultyLogin());
+        JButton adminButton =
+            createButton("ADMIN", NAVY);
+
+        JButton facultyButton =
+            createButton("FACULTY", GOLD);
+
+        JButton exitButton =
+            createButton("EXIT", RED);
+
+        studentButton.addActionListener(
+            e -> studentScreen()
+        );
+
+        adminButton.addActionListener(
+            e -> adminLogin()
+        );
+
+        facultyButton.addActionListener(
+            e -> facultyLogin()
+        );
 
         exitButton.addActionListener(e -> {
+
             int confirm = JOptionPane.showConfirmDialog(
                 this,
                 "Are you sure you want to exit?",
@@ -376,19 +405,24 @@ void changeScreen(JPanel panel) {
         panel.add(Box.createVerticalGlue());
 
         panel.add(title);
-        panel.add(Box.createVerticalStrut(12));
+
+        panel.add(Box.createVerticalStrut(10));
 
         panel.add(subtitle);
-        panel.add(Box.createVerticalStrut(40));
+
+        panel.add(Box.createVerticalStrut(35));
 
         panel.add(studentButton);
-        panel.add(Box.createVerticalStrut(18));
+
+        panel.add(Box.createVerticalStrut(15));
 
         panel.add(adminButton);
-        panel.add(Box.createVerticalStrut(18));
+
+        panel.add(Box.createVerticalStrut(15));
 
         panel.add(facultyButton);
-        panel.add(Box.createVerticalStrut(18));
+
+        panel.add(Box.createVerticalStrut(15));
 
         panel.add(exitButton);
 
@@ -403,16 +437,12 @@ void changeScreen(JPanel panel) {
     // STUDENT SCREEN
     // =====================================
 
-    
-    // =====================================
-    // STUDENT SCREEN - COMMIT 11
-    // =====================================
-
     void studentScreen() {
 
         getContentPane().removeAll();
 
         JPanel panel = createPanel();
+
         panel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -422,29 +452,19 @@ void changeScreen(JPanel panel) {
 
         JLabel title = createTitle("STUDENT INFORMATION");
 
-        JLabel subtitle = new JLabel(
-            "Enter your information to find your class schedule"
-        );
-        subtitle.setFont(new Font("Arial", Font.PLAIN, 14));
-        subtitle.setForeground(DARK);
-        subtitle.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JLabel nameLabel = new JLabel("Student Name:");
-        nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        nameLabel.setForeground(DARK);
+        JLabel nameLabel = new JLabel("Enter Name:");
 
         JTextField nameField = new JTextField(20);
-        nameField.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        JLabel sectionLabel = new JLabel("Section:");
-        sectionLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        sectionLabel.setForeground(DARK);
+        JLabel sectionLabel = new JLabel("Enter Section:");
 
         JTextField sectionField = new JTextField(20);
-        sectionField.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        JButton searchButton = createButton("SEARCH", BLUE);
-        JButton backButton = createButton("BACK", NAVY);
+        JButton searchButton =
+            createButton("SEARCH", BLUE);
+
+        JButton backButton =
+            createButton("BACK", NAVY);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -452,44 +472,46 @@ void changeScreen(JPanel panel) {
 
         panel.add(title, gbc);
 
-        gbc.gridy = 1;
-        panel.add(subtitle, gbc);
-
         gbc.gridwidth = 1;
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 1;
+
         panel.add(nameLabel, gbc);
 
         gbc.gridx = 1;
+
         panel.add(nameField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 2;
+
         panel.add(sectionLabel, gbc);
 
         gbc.gridx = 1;
+
         panel.add(sectionField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 3;
+
         panel.add(searchButton, gbc);
 
         gbc.gridx = 1;
+
         panel.add(backButton, gbc);
 
         searchButton.addActionListener(e -> {
 
             String name = nameField.getText().trim();
+
             String section = sectionField.getText().trim();
 
             if (name.isEmpty() || section.isEmpty()) {
 
                 JOptionPane.showMessageDialog(
                     this,
-                    "Please enter your name and section.",
-                    "MISSING INFORMATION",
-                    JOptionPane.WARNING_MESSAGE
+                    "Please enter your name and section."
                 );
 
                 return;
@@ -498,7 +520,9 @@ void changeScreen(JPanel panel) {
             showStudentSchedule(name, section);
         });
 
-        backButton.addActionListener(e -> mainMenu());
+        backButton.addActionListener(
+            e -> mainMenu()
+        );
 
         add(panel);
 
@@ -530,25 +554,6 @@ void changeScreen(JPanel panel) {
 
         title.setForeground(NAVY);
 
-        JLabel studentName = new JLabel(
-            "Student: " + name,
-            SwingConstants.CENTER
-        );
-
-        studentName.setFont(
-            new Font("Arial", Font.PLAIN, 15)
-        );
-
-        studentName.setForeground(DARK);
-
-        JPanel heading = new JPanel(
-            new GridLayout(2, 1, 5, 5)
-        );
-
-        heading.setBackground(LIGHT);
-        heading.add(title);
-        heading.add(studentName);
-
         String[] columns = {
             "Subject", "Teacher", "Time", "Room"
         };
@@ -558,7 +563,7 @@ void changeScreen(JPanel panel) {
 
         for (Schedule s : schedules) {
 
-            if (s.section.trim().equalsIgnoreCase(section.trim())) {
+            if (s.section.equalsIgnoreCase(section)) {
 
                 model.addRow(new Object[] {
                     s.subject,
@@ -586,6 +591,7 @@ void changeScreen(JPanel panel) {
         JPanel bottom = new JPanel();
 
         bottom.setBackground(LIGHT);
+
         bottom.add(backButton);
 
         panel.setBorder(
@@ -594,8 +600,10 @@ void changeScreen(JPanel panel) {
             )
         );
 
-        panel.add(heading, BorderLayout.NORTH);
+        panel.add(title, BorderLayout.NORTH);
+
         panel.add(scrollPane, BorderLayout.CENTER);
+
         panel.add(bottom, BorderLayout.SOUTH);
 
         add(panel);
@@ -606,236 +614,266 @@ void changeScreen(JPanel panel) {
 
             JOptionPane.showMessageDialog(
                 this,
-                "No schedule found for section: " + section,
-                "NO SCHEDULE FOUND",
-                JOptionPane.INFORMATION_MESSAGE
+                "No schedule found for section: " + section
             );
         }
     }
-
 
     // =====================================
     // FACULTY LOGIN
     // =====================================
 
-   
-void facultyLogin() {
+    void facultyLogin() {
 
-    JPanel panel = new JPanel(new GridLayout(3, 1, 10, 10));
-    panel.setBackground(LIGHT);
-    panel.setBorder(
-        BorderFactory.createEmptyBorder(15, 20, 15, 20)
-    );
+        JTextField nameField = new JTextField(20);
 
-    JLabel title = new JLabel(
-        "FACULTY LOGIN",
-        SwingConstants.CENTER
-    );
-    title.setFont(new Font("Arial", Font.BOLD, 20));
-    title.setForeground(NAVY);
+        Object[] fields = {
+            "Enter Faculty Name:",
+            nameField
+        };
 
-    JLabel instruction = new JLabel(
-        "Enter your faculty name to view your schedule.",
-        SwingConstants.CENTER
-    );
-    instruction.setFont(new Font("Arial", Font.PLAIN, 13));
-    instruction.setForeground(DARK);
+        int result = JOptionPane.showConfirmDialog(
+            this,
+            fields,
+            "FACULTY LOGIN",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+        );
 
-    JTextField facultyField = new JTextField();
-    facultyField.setFont(new Font("Arial", Font.PLAIN, 15));
+        if (result == JOptionPane.OK_OPTION) {
 
-    panel.add(title);
-    panel.add(instruction);
-    panel.add(facultyField);
+            String facultyName =
+                nameField.getText().trim();
 
-    int result = JOptionPane.showConfirmDialog(
-        this,
-        panel,
-        "FACULTY LOGIN",
-        JOptionPane.OK_CANCEL_OPTION,
-        JOptionPane.PLAIN_MESSAGE
-    );
+            if (facultyName.isEmpty()) {
 
-    if (result == JOptionPane.OK_OPTION) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter your faculty name."
+                );
 
-        String facultyName = facultyField.getText().trim();
+                return;
+            }
 
-        if (facultyName.isEmpty()) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Please enter your faculty name.",
-                "MISSING INFORMATION",
-                JOptionPane.WARNING_MESSAGE
-            );
-            return;
+            showFacultySchedule(facultyName);
         }
-
-        showFacultySchedule(facultyName);
     }
-}
-
 
     // =====================================
     // FACULTY SCHEDULE
     // =====================================
 
-   void showFacultySchedule(String facultyName) {
+    void showFacultySchedule(String facultyName) {
 
-    getContentPane().removeAll();
+        getContentPane().removeAll();
 
-    JPanel panel = createPanel();
-    panel.setLayout(new BorderLayout(10, 10));
+        JPanel panel = createPanel();
 
-    JLabel title = new JLabel(
-        "FACULTY CLASS SCHEDULE",
-        SwingConstants.CENTER
-    );
-    title.setFont(new Font("Arial", Font.BOLD, 22));
-    title.setForeground(NAVY);
+        panel.setLayout(
+            new BorderLayout(10, 10)
+        );
 
-    JLabel facultyLabel = new JLabel(
-        "Faculty: " + facultyName,
-        SwingConstants.CENTER
-    );
-    facultyLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-    facultyLabel.setForeground(DARK);
+        JLabel title = new JLabel(
+            "FACULTY SCHEDULE - " + facultyName,
+            SwingConstants.CENTER
+        );
 
-    JPanel heading = new JPanel(new GridLayout(2, 1, 5, 5));
-    heading.setBackground(LIGHT);
-    heading.add(title);
-    heading.add(facultyLabel);
+        title.setFont(
+            new Font("Arial", Font.BOLD, 22)
+        );
 
-    String[] columns = {
-        "Subject", "Section", "Time", "Room"
-    };
+        title.setForeground(NAVY);
 
-    DefaultTableModel model = new DefaultTableModel(columns, 0);
+        String[] columns = {
+            "Subject", "Section", "Time", "Room"
+        };
 
-    for (Schedule s : schedules) {
-        if (s.teacher.trim().equalsIgnoreCase(facultyName.trim())) {
-            model.addRow(new Object[] {
-                s.subject, s.section, s.time, s.room
-            });
+        DefaultTableModel model =
+            new DefaultTableModel(columns, 0);
+
+        for (Schedule s : schedules) {
+
+            if (s.teacher.equalsIgnoreCase(facultyName)) {
+
+                model.addRow(new Object[] {
+                    s.subject,
+                    s.section,
+                    s.time,
+                    s.room
+                });
+            }
+        }
+
+        JTable table = new JTable(model);
+
+        styleTable(table);
+
+        JScrollPane scrollPane =
+            new JScrollPane(table);
+
+        JButton backButton =
+            createButton("BACK TO MENU", NAVY);
+
+        backButton.addActionListener(
+            e -> mainMenu()
+        );
+
+        JPanel bottom = new JPanel();
+
+        bottom.setBackground(LIGHT);
+
+        bottom.add(backButton);
+
+        panel.setBorder(
+            BorderFactory.createEmptyBorder(
+                15, 15, 15, 15
+            )
+        );
+
+        panel.add(title, BorderLayout.NORTH);
+
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        panel.add(bottom, BorderLayout.SOUTH);
+
+        add(panel);
+
+        refreshScreen();
+
+        if (model.getRowCount() == 0) {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "No schedule found for faculty: " + facultyName
+            );
         }
     }
 
-    JTable table = new JTable(model);
-    styleTable(table);
-
-    JScrollPane scrollPane = new JScrollPane(table);
-
-    JLabel resultLabel;
-
-    if (model.getRowCount() > 0) {
-        resultLabel = new JLabel(
-            "Total schedules found: " + model.getRowCount(),
-            SwingConstants.CENTER
-        );
-    } else {
-        resultLabel = new JLabel(
-            "No schedules found for this faculty member.",
-            SwingConstants.CENTER
-        );
-    }
-
-    resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
-    resultLabel.setForeground(DARK);
-
-    JButton backButton = createButton("BACK TO MENU", NAVY);
-    backButton.addActionListener(e -> mainMenu());
-
-    JPanel bottom = new JPanel(new GridLayout(2, 1, 5, 5));
-    bottom.setBackground(LIGHT);
-
-    JPanel buttonPanel = new JPanel();
-    buttonPanel.setBackground(LIGHT);
-    buttonPanel.add(backButton);
-
-    bottom.add(resultLabel);
-    bottom.add(buttonPanel);
-
-    panel.setBorder(
-        BorderFactory.createEmptyBorder(15, 15, 15, 15)
-    );
-
-    panel.add(heading, BorderLayout.NORTH);
-    panel.add(scrollPane, BorderLayout.CENTER);
-    panel.add(bottom, BorderLayout.SOUTH);
-
-    add(panel);
-    refreshScreen();
-}
     // =====================================
     // ADMIN LOGIN
     // =====================================
 
     void adminLogin() {
 
-    JPanel panel = new JPanel(new GridLayout(3, 2, 10, 12));
-    panel.setBackground(LIGHT);
-    panel.setBorder(
-        BorderFactory.createEmptyBorder(15, 20, 15, 20)
-    );
+        JTextField usernameField = new JTextField(15);
 
-    JLabel title = new JLabel("ADMIN LOGIN");
-    title.setFont(new Font("Arial", Font.BOLD, 20));
-    title.setForeground(NAVY);
+        JPasswordField passwordField =
+            new JPasswordField(15);
 
-    JLabel usernameLabel = new JLabel("Username:");
-    usernameLabel.setFont(new Font("Arial", Font.BOLD, 14));
-    usernameLabel.setForeground(DARK);
+        Object[] fields = {
+            "Username:",
+            usernameField,
+            "Password:",
+            passwordField
+        };
 
-    JTextField usernameField = new JTextField(15);
-    usernameField.setFont(new Font("Arial", Font.PLAIN, 14));
+        int result = JOptionPane.showConfirmDialog(
+            this,
+            fields,
+            "ADMIN LOGIN",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+        );
 
-    JLabel passwordLabel = new JLabel("Password:");
-    passwordLabel.setFont(new Font("Arial", Font.BOLD, 14));
-    passwordLabel.setForeground(DARK);
+        if (result == JOptionPane.OK_OPTION) {
 
-    JPasswordField passwordField = new JPasswordField(15);
-    passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
+            String username =
+                usernameField.getText();
 
-    panel.add(title);
-    panel.add(new JLabel(""));
-    panel.add(usernameLabel);
-    panel.add(usernameField);
-    panel.add(passwordLabel);
-    panel.add(passwordField);
+            String password =
+                new String(passwordField.getPassword());
 
-    int result = JOptionPane.showConfirmDialog(
-        this,
-        panel,
-        "ADMIN LOGIN",
-        JOptionPane.OK_CANCEL_OPTION,
-        JOptionPane.PLAIN_MESSAGE
-    );
+            if (username.equals(ADMIN_USERNAME)
+                    && password.equals(ADMIN_PASSWORD)) {
 
-    if (result == JOptionPane.OK_OPTION) {
+                adminMenu();
 
-        String username = usernameField.getText().trim();
-        String password = new String(passwordField.getPassword());
+            } else {
 
-        if (username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Please enter your username and password.",
-                "MISSING INFORMATION",
-                JOptionPane.WARNING_MESSAGE
-            );
-            return;
-        }
-
-        if (username.equals("admin") && password.equals("admin123")) {
-            adminMenu();
-        } else {
-            JOptionPane.showMessageDialog(
-                this,
-                "Incorrect username or password.",
-                "LOGIN FAILED",
-                JOptionPane.ERROR_MESSAGE
-            );
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Incorrect username or password.",
+                    "LOGIN FAILED",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
         }
     }
+
+    // =====================================
+    // ADMIN MENU
+    // =====================================
+
+    void adminMenu() {
+
+        getContentPane().removeAll();
+
+        JPanel panel = createPanel();
+
+        panel.setLayout(
+            new BoxLayout(panel, BoxLayout.Y_AXIS)
+        );
+
+        JLabel title = createTitle("ADMIN MENU");
+
+        JLabel subtitle = new JLabel(
+            "Manage classroom schedules"
+        );
+
+        subtitle.setFont(
+            new Font("Arial", Font.PLAIN, 16)
+        );
+
+        subtitle.setForeground(DARK);
+
+        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton viewButton =
+            createButton("VIEW SCHEDULES", NAVY);
+
+        JButton editButton =
+            createButton("EDIT SCHEDULES", GOLD);
+
+        JButton backButton =
+            createButton("BACK TO MAIN MENU", RED);
+
+        viewButton.addActionListener(
+            e -> viewSchedules()
+        );
+
+        editButton.addActionListener(
+            e -> editSchedules()
+        );
+
+        backButton.addActionListener(
+            e -> mainMenu()
+        );
+
+        panel.add(Box.createVerticalGlue());
+
+        panel.add(title);
+
+        panel.add(Box.createVerticalStrut(10));
+
+        panel.add(subtitle);
+
+        panel.add(Box.createVerticalStrut(35));
+
+        panel.add(viewButton);
+
+        panel.add(Box.createVerticalStrut(15));
+
+        panel.add(editButton);
+
+        panel.add(Box.createVerticalStrut(15));
+
+        panel.add(backButton);
+
+        panel.add(Box.createVerticalGlue());
+
+        add(panel);
+
+        refreshScreen();
     }
 
     // =====================================
