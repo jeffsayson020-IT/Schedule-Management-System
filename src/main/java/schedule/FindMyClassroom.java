@@ -1066,85 +1066,116 @@ public class FindMyClassroom extends JFrame {
     void updateSchedule() {
 
         if (schedules.isEmpty()) {
-
             JOptionPane.showMessageDialog(
                 this,
-                "No schedules available."
+                "There are no schedules available to update.",
+                "NO SCHEDULES",
+                JOptionPane.INFORMATION_MESSAGE
             );
-
             return;
         }
 
-        String[] scheduleList =
-            new String[schedules.size()];
+        String[] scheduleOptions = new String[schedules.size()];
 
         for (int i = 0; i < schedules.size(); i++) {
-
             Schedule s = schedules.get(i);
 
-            scheduleList[i] =
-                s.subject + " - "
-                + s.section + " - "
-                + s.room;
+            scheduleOptions[i] = s.subject + " - "
+                    + s.section + " - "
+                    + s.teacher;
         }
 
-        String selected =
-            (String) JOptionPane.showInputDialog(
-                this,
-                "Select schedule:",
-                "UPDATE SCHEDULE",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                scheduleList,
-                scheduleList[0]
-            );
+        JComboBox<String> scheduleBox =
+                new JComboBox<>(scheduleOptions);
 
-        if (selected == null) {
-            return;
-        }
+        JLabel scheduleLabel = new JLabel("Select Schedule:");
+        scheduleLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        scheduleLabel.setForeground(DARK);
 
-        int index = -1;
+        JLabel subjectLabel = new JLabel("Subject:");
+        JLabel teacherLabel = new JLabel("Teacher:");
+        JLabel sectionLabel = new JLabel("Section:");
+        JLabel timeLabel = new JLabel("Time:");
+        JLabel roomLabel = new JLabel("Room:");
 
-        for (int i = 0; i < scheduleList.length; i++) {
+        JTextField subjectField = new JTextField(18);
+        JTextField teacherField = new JTextField(18);
+        JTextField sectionField = new JTextField(18);
+        JTextField timeField = new JTextField(18);
+        JTextField roomField = new JTextField(18);
 
-            if (scheduleList[i].equals(selected)) {
-                index = i;
-                break;
-            }
-        }
-
-        if (index == -1) {
-            return;
-        }
-
-        Schedule s = schedules.get(index);
-
-        JTextField subject =
-            new JTextField(s.subject, 15);
-
-        JTextField teacher =
-            new JTextField(s.teacher, 15);
-
-        JTextField section =
-            new JTextField(s.section, 15);
-
-        JTextField time =
-            new JTextField(s.time, 15);
-
-        JTextField room =
-            new JTextField(s.room, 15);
-
-        Object[] fields = {
-            "Subject:", subject,
-            "Teacher:", teacher,
-            "Section:", section,
-            "Time:", time,
-            "Room:", room
+        JLabel[] labels = {
+            subjectLabel, teacherLabel, sectionLabel,
+            timeLabel, roomLabel
         };
+
+        JTextField[] fields = {
+            subjectField, teacherField, sectionField,
+            timeField, roomField
+        };
+
+        for (JLabel label : labels) {
+            label.setFont(new Font("Arial", Font.BOLD, 14));
+            label.setForeground(DARK);
+        }
+
+        for (JTextField field : fields) {
+            field.setFont(new Font("Arial", Font.PLAIN, 14));
+        }
+
+        JPanel panel = new JPanel(new GridLayout(6, 2, 10, 10));
+        panel.setBackground(LIGHT);
+        panel.setBorder(
+            BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        );
+
+        panel.add(scheduleLabel);
+        panel.add(scheduleBox);
+
+        panel.add(subjectLabel);
+        panel.add(subjectField);
+
+        panel.add(teacherLabel);
+        panel.add(teacherField);
+
+        panel.add(sectionLabel);
+        panel.add(sectionField);
+
+        panel.add(timeLabel);
+        panel.add(timeField);
+
+        panel.add(roomLabel);
+        panel.add(roomField);
+
+        scheduleBox.addActionListener(e -> {
+            int index = scheduleBox.getSelectedIndex();
+
+            if (index >= 0) {
+                Schedule s = schedules.get(index);
+
+                subjectField.setText(s.subject);
+                teacherField.setText(s.teacher);
+                sectionField.setText(s.section);
+                timeField.setText(s.time);
+                roomField.setText(s.room);
+            }
+        });
+
+        int selectedIndex = scheduleBox.getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            Schedule s = schedules.get(selectedIndex);
+
+            subjectField.setText(s.subject);
+            teacherField.setText(s.teacher);
+            sectionField.setText(s.section);
+            timeField.setText(s.time);
+            roomField.setText(s.room);
+        }
 
         int result = JOptionPane.showConfirmDialog(
             this,
-            fields,
+            panel,
             "UPDATE SCHEDULE",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE
@@ -1152,32 +1183,43 @@ public class FindMyClassroom extends JFrame {
 
         if (result == JOptionPane.OK_OPTION) {
 
-            if (subject.getText().trim().isEmpty()
-                    || teacher.getText().trim().isEmpty()
-                    || section.getText().trim().isEmpty()
-                    || time.getText().trim().isEmpty()
-                    || room.getText().trim().isEmpty()) {
+            String subject = subjectField.getText().trim();
+            String teacher = teacherField.getText().trim();
+            String section = sectionField.getText().trim();
+            String time = timeField.getText().trim();
+            String room = roomField.getText().trim();
+
+            if (subject.isEmpty() || teacher.isEmpty()
+                    || section.isEmpty() || time.isEmpty()
+                    || room.isEmpty()) {
 
                 JOptionPane.showMessageDialog(
                     this,
-                    "Please complete all fields."
+                    "Please complete all schedule information.",
+                    "MISSING INFORMATION",
+                    JOptionPane.WARNING_MESSAGE
                 );
-
                 return;
             }
 
-            s.subject = subject.getText().trim();
-            s.teacher = teacher.getText().trim();
-            s.section = section.getText().trim();
-            s.time = time.getText().trim();
-            s.room = room.getText().trim();
+            int index = scheduleBox.getSelectedIndex();
 
-            JOptionPane.showMessageDialog(
-                this,
-                "Schedule updated successfully!",
-                "SUCCESS",
-                JOptionPane.INFORMATION_MESSAGE
-            );
+            if (index >= 0) {
+                Schedule s = schedules.get(index);
+
+                s.subject = subject;
+                s.teacher = teacher;
+                s.section = section;
+                s.time = time;
+                s.room = room;
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Schedule updated successfully!",
+                    "UPDATE SUCCESSFUL",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
         }
     }
 
