@@ -1,5 +1,6 @@
 package schedule;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
@@ -186,39 +187,39 @@ public class FindMyClassroom extends JFrame {
     // =====================================
 
     void styleTable(JTable table) {
+    table.setFont(new Font("Arial", Font.PLAIN, 14));
+    table.setRowHeight(38);
+    table.setForeground(DARK);
+    table.setBackground(WHITE);
 
-        table.setFont(
-            new Font("Arial", Font.PLAIN, 14)
-        );
+    table.setSelectionBackground(BLUE);
+    table.setSelectionForeground(WHITE);
 
-        table.setRowHeight(34);
+    table.setGridColor(new Color(220, 226, 235));
+    table.setShowGrid(true);
+    table.setIntercellSpacing(new Dimension(10, 5));
 
-        table.setBackground(WHITE);
-        table.setForeground(DARK);
+    table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-        table.setSelectionBackground(BLUE);
-        table.setSelectionForeground(WHITE);
+    JTableHeader header = table.getTableHeader();
+    header.setFont(new Font("Arial", Font.BOLD, 14));
+    header.setBackground(NAVY);
+    header.setForeground(WHITE);
+    header.setPreferredSize(new Dimension(header.getWidth(), 42));
+    header.setReorderingAllowed(false);
 
-        table.setGridColor(
-            new Color(220, 226, 235)
-        );
+    DefaultTableCellRenderer centerRenderer =
+        new DefaultTableCellRenderer();
 
-        table.setShowGrid(true);
-        table.setFillsViewportHeight(true);
+    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JTableHeader header = table.getTableHeader();
-
-        header.setBackground(NAVY);
-        header.setForeground(WHITE);
-
-        header.setFont(
-            new Font("Arial", Font.BOLD, 14)
-        );
-
-        header.setPreferredSize(
-            new Dimension(0, 38)
-        );
+    for (int i = 0; i < table.getColumnCount(); i++) {
+        table.getColumnModel()
+             .getColumn(i)
+             .setCellRenderer(centerRenderer);
     }
+}
+
 
     // =====================================
     // REFRESH SCREEN
