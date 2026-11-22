@@ -679,92 +679,92 @@ void facultyLogin() {
     // FACULTY SCHEDULE
     // =====================================
 
-    void showFacultySchedule(String facultyName) {
+   void showFacultySchedule(String facultyName) {
 
-        getContentPane().removeAll();
+    getContentPane().removeAll();
 
-        JPanel panel = createPanel();
+    JPanel panel = createPanel();
+    panel.setLayout(new BorderLayout(10, 10));
 
-        panel.setLayout(
-            new BorderLayout(10, 10)
-        );
+    JLabel title = new JLabel(
+        "FACULTY CLASS SCHEDULE",
+        SwingConstants.CENTER
+    );
+    title.setFont(new Font("Arial", Font.BOLD, 22));
+    title.setForeground(NAVY);
 
-        JLabel title = new JLabel(
-            "FACULTY SCHEDULE - " + facultyName,
-            SwingConstants.CENTER
-        );
+    JLabel facultyLabel = new JLabel(
+        "Faculty: " + facultyName,
+        SwingConstants.CENTER
+    );
+    facultyLabel.setFont(new Font("Arial", Font.PLAIN, 15));
+    facultyLabel.setForeground(DARK);
 
-        title.setFont(
-            new Font("Arial", Font.BOLD, 22)
-        );
+    JPanel heading = new JPanel(new GridLayout(2, 1, 5, 5));
+    heading.setBackground(LIGHT);
+    heading.add(title);
+    heading.add(facultyLabel);
 
-        title.setForeground(NAVY);
+    String[] columns = {
+        "Subject", "Section", "Time", "Room"
+    };
 
-        String[] columns = {
-            "Subject", "Section", "Time", "Room"
-        };
+    DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-        DefaultTableModel model =
-            new DefaultTableModel(columns, 0);
-
-        for (Schedule s : schedules) {
-
-            if (s.teacher.equalsIgnoreCase(facultyName)) {
-
-                model.addRow(new Object[] {
-                    s.subject,
-                    s.section,
-                    s.time,
-                    s.room
-                });
-            }
-        }
-
-        JTable table = new JTable(model);
-
-        styleTable(table);
-
-        JScrollPane scrollPane =
-            new JScrollPane(table);
-
-        JButton backButton =
-            createButton("BACK TO MENU", NAVY);
-
-        backButton.addActionListener(
-            e -> mainMenu()
-        );
-
-        JPanel bottom = new JPanel();
-
-        bottom.setBackground(LIGHT);
-
-        bottom.add(backButton);
-
-        panel.setBorder(
-            BorderFactory.createEmptyBorder(
-                15, 15, 15, 15
-            )
-        );
-
-        panel.add(title, BorderLayout.NORTH);
-
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        panel.add(bottom, BorderLayout.SOUTH);
-
-        add(panel);
-
-        refreshScreen();
-
-        if (model.getRowCount() == 0) {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "No schedule found for faculty: " + facultyName
-            );
+    for (Schedule s : schedules) {
+        if (s.teacher.trim().equalsIgnoreCase(facultyName.trim())) {
+            model.addRow(new Object[] {
+                s.subject, s.section, s.time, s.room
+            });
         }
     }
 
+    JTable table = new JTable(model);
+    styleTable(table);
+
+    JScrollPane scrollPane = new JScrollPane(table);
+
+    JLabel resultLabel;
+
+    if (model.getRowCount() > 0) {
+        resultLabel = new JLabel(
+            "Total schedules found: " + model.getRowCount(),
+            SwingConstants.CENTER
+        );
+    } else {
+        resultLabel = new JLabel(
+            "No schedules found for this faculty member.",
+            SwingConstants.CENTER
+        );
+    }
+
+    resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+    resultLabel.setForeground(DARK);
+
+    JButton backButton = createButton("BACK TO MENU", NAVY);
+    backButton.addActionListener(e -> mainMenu());
+
+    JPanel bottom = new JPanel(new GridLayout(2, 1, 5, 5));
+    bottom.setBackground(LIGHT);
+
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.setBackground(LIGHT);
+    buttonPanel.add(backButton);
+
+    bottom.add(resultLabel);
+    bottom.add(buttonPanel);
+
+    panel.setBorder(
+        BorderFactory.createEmptyBorder(15, 15, 15, 15)
+    );
+
+    panel.add(heading, BorderLayout.NORTH);
+    panel.add(scrollPane, BorderLayout.CENTER);
+    panel.add(bottom, BorderLayout.SOUTH);
+
+    add(panel);
+    refreshScreen();
+}
     // =====================================
     // ADMIN LOGIN
     // =====================================
