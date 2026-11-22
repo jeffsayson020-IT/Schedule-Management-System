@@ -509,6 +509,11 @@ void changeScreen(JPanel panel) {
     // STUDENT SCHEDULE
     // =====================================
 
+   
+    // =====================================
+    // STUDENT SCHEDULE - COMMIT 12
+    // =====================================
+
     void showStudentSchedule(String name, String section) {
 
         getContentPane().removeAll();
@@ -530,6 +535,25 @@ void changeScreen(JPanel panel) {
 
         title.setForeground(NAVY);
 
+        JLabel studentName = new JLabel(
+            "Student: " + name,
+            SwingConstants.CENTER
+        );
+
+        studentName.setFont(
+            new Font("Arial", Font.PLAIN, 15)
+        );
+
+        studentName.setForeground(DARK);
+
+        JPanel heading = new JPanel(
+            new GridLayout(2, 1, 5, 5)
+        );
+
+        heading.setBackground(LIGHT);
+        heading.add(title);
+        heading.add(studentName);
+
         String[] columns = {
             "Subject", "Teacher", "Time", "Room"
         };
@@ -539,7 +563,7 @@ void changeScreen(JPanel panel) {
 
         for (Schedule s : schedules) {
 
-            if (s.section.equalsIgnoreCase(section)) {
+            if (s.section.trim().equalsIgnoreCase(section.trim())) {
 
                 model.addRow(new Object[] {
                     s.subject,
@@ -567,7 +591,6 @@ void changeScreen(JPanel panel) {
         JPanel bottom = new JPanel();
 
         bottom.setBackground(LIGHT);
-
         bottom.add(backButton);
 
         panel.setBorder(
@@ -576,10 +599,8 @@ void changeScreen(JPanel panel) {
             )
         );
 
-        panel.add(title, BorderLayout.NORTH);
-
+        panel.add(heading, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);
-
         panel.add(bottom, BorderLayout.SOUTH);
 
         add(panel);
@@ -590,10 +611,13 @@ void changeScreen(JPanel panel) {
 
             JOptionPane.showMessageDialog(
                 this,
-                "No schedule found for section: " + section
+                "No schedule found for section: " + section,
+                "NO SCHEDULE FOUND",
+                JOptionPane.INFORMATION_MESSAGE
             );
         }
     }
+
 
     // =====================================
     // FACULTY LOGIN
