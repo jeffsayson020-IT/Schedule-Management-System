@@ -1002,89 +1002,89 @@ public class FindMyClassroom extends JFrame {
     // ADD SCHEDULE
     // =====================================
 
-    void addSchedule() {
+   void addSchedule() {
+    JTextField subjectField = new JTextField();
+    JTextField teacherField = new JTextField();
+    JTextField sectionField = new JTextField();
+    JTextField timeField = new JTextField();
+    JTextField roomField = new JTextField();
 
-        JTextField subjectField = new JTextField(18);
-        JTextField teacherField = new JTextField(18);
-        JTextField sectionField = new JTextField(18);
-        JTextField timeField = new JTextField(18);
-        JTextField roomField = new JTextField(18);
+    JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
 
-        JTextField[] fields = {
-            subjectField, teacherField, sectionField,
-            timeField, roomField
-        };
+    panel.add(new JLabel("Subject:"));
+    panel.add(subjectField);
+    panel.add(new JLabel("Teacher:"));
+    panel.add(teacherField);
+    panel.add(new JLabel("Section:"));
+    panel.add(sectionField);
+    panel.add(new JLabel("Time:"));
+    panel.add(timeField);
+    panel.add(new JLabel("Room:"));
+    panel.add(roomField);
 
-        for (JTextField field : fields) {
-            field.setFont(new Font("Arial", Font.PLAIN, 14));
-        }
+    int result = JOptionPane.showConfirmDialog(
+        this, panel, "ADD SCHEDULE",
+        JOptionPane.OK_CANCEL_OPTION,
+        JOptionPane.PLAIN_MESSAGE
+    );
 
-        JLabel[] labels = {
-            new JLabel("Subject:"),
-            new JLabel("Teacher:"),
-            new JLabel("Section:"),
-            new JLabel("Time:"),
-            new JLabel("Room:")
-        };
+    if (result != JOptionPane.OK_OPTION) {
+        return;
+    }
 
-        for (JLabel label : labels) {
-            label.setFont(new Font("Arial", Font.BOLD, 14));
-            label.setForeground(DARK);
-        }
+    String subject = subjectField.getText().trim();
+    String teacher = teacherField.getText().trim();
+    String section = sectionField.getText().trim();
+    String time = timeField.getText().trim();
+    String room = roomField.getText().trim();
 
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
-        panel.setBackground(LIGHT);
-        panel.setBorder(
-            BorderFactory.createEmptyBorder(15, 15, 15, 15)
-        );
-
-        for (int i = 0; i < labels.length; i++) {
-            panel.add(labels[i]);
-            panel.add(fields[i]);
-        }
-
-        int result = JOptionPane.showConfirmDialog(
-            this,
-            panel,
-            "ADD SCHEDULE",
-            JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE
-        );
-
-        if (result != JOptionPane.OK_OPTION) {
-            return;
-        }
-
-        String subject = subjectField.getText().trim();
-        String teacher = teacherField.getText().trim();
-        String section = sectionField.getText().trim();
-        String time = timeField.getText().trim();
-        String room = roomField.getText().trim();
-
-        if (subject.isEmpty() || teacher.isEmpty()
-                || section.isEmpty() || time.isEmpty()
-                || room.isEmpty()) {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "Please complete all schedule fields.",
-                "MISSING INFORMATION",
-                JOptionPane.WARNING_MESSAGE
-            );
-            return;
-        }
-
-        schedules.add(
-            new Schedule(subject, teacher, section, time, room)
-        );
+    if (subject.isEmpty() || teacher.isEmpty()
+            || section.isEmpty() || time.isEmpty()
+            || room.isEmpty()) {
 
         JOptionPane.showMessageDialog(
             this,
-            "Schedule added successfully!",
-            "SUCCESS",
-            JOptionPane.INFORMATION_MESSAGE
+            "Unable to add schedule.\n\n"
+            + "Please complete all required fields:\n"
+            + "- Subject\n- Teacher\n- Section\n- Time\n- Room",
+            "INPUT ERROR",
+            JOptionPane.ERROR_MESSAGE
         );
+        return;
     }
+
+    for (Schedule s : schedules) {
+        if (s.subject.equalsIgnoreCase(subject)
+                && s.teacher.equalsIgnoreCase(teacher)
+                && s.section.equalsIgnoreCase(section)
+                && s.time.equalsIgnoreCase(time)
+                && s.room.equalsIgnoreCase(room)) {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "This schedule already exists.\n"
+                + "Please check the schedule details.",
+                "DUPLICATE SCHEDULE",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+    }
+
+    schedules.add(new Schedule(subject, teacher, section, time, room));
+
+    JOptionPane.showMessageDialog(
+        this,
+        "The new schedule has been added successfully!\n\n"
+        + "Subject: " + subject + "\n"
+        + "Teacher: " + teacher + "\n"
+        + "Section: " + section + "\n"
+        + "Time: " + time + "\n"
+        + "Room: " + room,
+        "SCHEDULE ADDED",
+        JOptionPane.INFORMATION_MESSAGE
+    );
+}
 
     // =====================================
     // UPDATE SCHEDULE
