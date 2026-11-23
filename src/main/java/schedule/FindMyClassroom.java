@@ -239,38 +239,42 @@ public class FindMyClassroom extends JFrame {
 
     static void addSampleSchedules() {
 
-        schedules.add(new Schedule(
-            "Database Management",
-            "Mr. Santos",
-            "BSIT 2A",
-            "8:00 AM",
-            "Room 304"
-        ));
-
-        schedules.add(new Schedule(
-            "Programming",
-            "Ms. Cruz",
-            "BSIT 2A",
-            "10:00 AM",
-            "Room 205"
-        ));
-
-        schedules.add(new Schedule(
-            "Networking",
-            "Mr. Reyes",
-            "BSIT 2A",
-            "1:00 PM",
-            "Room 102"
-        ));
-
-        schedules.add(new Schedule(
-            "Web Development",
-            "Ms. Garcia",
-            "BSIT 2B",
-            "9:00 AM",
-            "Room 201"
-        ));
+    if (!schedules.isEmpty()) {
+        return;
     }
+
+    schedules.add(new Schedule(
+        "Database Management",
+        "Mr. Santos",
+        "BSIT 2A",
+        "8:00 AM",
+        "Room 304"
+    ));
+
+    schedules.add(new Schedule(
+        "Programming",
+        "Ms. Cruz",
+        "BSIT 2A",
+        "10:00 AM",
+        "Room 205"
+    ));
+
+    schedules.add(new Schedule(
+        "Networking",
+        "Mr. Reyes",
+        "BSIT 2A",
+        "1:00 PM",
+        "Room 102"
+    ));
+
+    schedules.add(new Schedule(
+        "Web Development",
+        "Ms. Garcia",
+        "BSIT 2B",
+        "9:00 AM",
+        "Room 201"
+    ));
+}
 
     // =====================================
     // 10. WELCOME SCREEN
