@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class FindMyClassroom extends JFrame {
 
     // =====================================
-    // SCHOOL COLOR THEME
+    // 1. SCHOOL COLOR THEME
     // =====================================
 
     static final Color NAVY = new Color(23, 54, 93);
@@ -22,7 +22,7 @@ public class FindMyClassroom extends JFrame {
     static final Color RED = new Color(190, 65, 65);
 
     // =====================================
-    // SCHEDULE DATA
+    // 2. SCHEDULE DATA
     // =====================================
 
     static class Schedule {
@@ -51,7 +51,7 @@ public class FindMyClassroom extends JFrame {
     static final String ADMIN_PASSWORD = "1234";
 
     // =====================================
-    // CONSTRUCTOR
+    // 3. CONSTRUCTOR
     // =====================================
 
     FindMyClassroom() {
@@ -70,7 +70,7 @@ public class FindMyClassroom extends JFrame {
 }
 
     // =====================================
-    // BUTTON DESIGN - FIXED VISIBILITY
+    // 4. BUTTON DESIGN - FIXED VISIBILITY
     // =====================================
 
     JButton createButton(String text, Color color) {
@@ -153,7 +153,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // PANEL DESIGN
+    // 5. PANEL DESIGN
     // =====================================
 
     JPanel createPanel() {
@@ -166,7 +166,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // TITLE DESIGN
+    // 6. TITLE DESIGN
     // =====================================
 
     JLabel createTitle(String text) {
@@ -185,7 +185,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // TABLE DESIGN
+    // 7. TABLE DESIGN
     // =====================================
 
     void styleTable(JTable table) {
@@ -224,7 +224,7 @@ public class FindMyClassroom extends JFrame {
 
 
     // =====================================
-    // REFRESH SCREEN
+    // 8. REFRESH SCREEN
     // =====================================
 
     void refreshScreen() {
@@ -234,7 +234,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // SAMPLE SCHEDULES
+    // 9. SAMPLE SCHEDULES
     // =====================================
 
     static void addSampleSchedules() {
@@ -273,7 +273,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // WELCOME SCREEN
+    // 10. WELCOME SCREEN
     // =====================================
 
     void welcomeScreen() {
@@ -340,7 +340,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // MAIN MENU
+    // 11. MAIN MENU
     // =====================================
 
     void mainMenu() {
@@ -437,7 +437,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // STUDENT SCREEN
+    // 12. STUDENT SCREEN
     // =====================================
 
     void studentScreen() {
@@ -533,7 +533,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // STUDENT SCHEDULE
+    // 13. STUDENT SCHEDULE
     // =====================================
 
     void showStudentSchedule(String name, String section) {
@@ -623,7 +623,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // FACULTY LOGIN
+    // 14. FACULTY LOGIN
     // =====================================
 
     void facultyLogin() {
@@ -663,7 +663,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // FACULTY SCHEDULE
+    // 15. FACULTY SCHEDULE
     // =====================================
 
     void showFacultySchedule(String facultyName) {
@@ -753,7 +753,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // ADMIN LOGIN
+    // 16. ADMIN LOGIN
     // =====================================
 
     void adminLogin() {
@@ -804,7 +804,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // ADMIN MENU
+    // 17. ADMIN MENU
     // =====================================
 
     void adminMenu() {
@@ -880,7 +880,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // VIEW ALL SCHEDULES
+    // 18. VIEW ALL SCHEDULES
     // =====================================
 
     void viewSchedules() {
@@ -960,7 +960,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // EDIT SCHEDULES
+    // 19. EDIT SCHEDULES
     // =====================================
 
     void editSchedules() {
@@ -1002,7 +1002,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // ADD SCHEDULE
+    // 20. ADD SCHEDULE
     // =====================================
 
    void addSchedule() {
@@ -1090,7 +1090,7 @@ public class FindMyClassroom extends JFrame {
 }
 
     // =====================================
-    // UPDATE SCHEDULE
+    // 21. UPDATE SCHEDULE
     // =====================================
 
     void updateSchedule() {
@@ -1254,7 +1254,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // DELETE SCHEDULE
+    // 22. DELETE SCHEDULE
     // =====================================
 
     void deleteSchedule() {
@@ -1339,7 +1339,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // MAIN METHOD
+    // 23. MAIN METHOD
     // =====================================
 
     public static void main(String[] args) {
