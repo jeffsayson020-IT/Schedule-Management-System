@@ -911,6 +911,8 @@ public class FindMyClassroom extends JFrame {
         DefaultTableModel model =
             new DefaultTableModel(columns, 0);
 
+        sortSchedulesBySubject();    
+
         for (Schedule s : schedules) {
 
             model.addRow(new Object[] {
@@ -1337,6 +1339,16 @@ public class FindMyClassroom extends JFrame {
             );
         }
     }
+
+    // =====================================
+    // SORT SCHEDULES BY SUBJECT
+    // =====================================
+
+void sortSchedulesBySubject() {
+    schedules.sort(
+        (s1, s2) -> s1.subject.compareToIgnoreCase(s2.subject)
+    );
+}
 
     // =====================================
     // 23. MAIN METHOD
