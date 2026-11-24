@@ -564,7 +564,12 @@ public class FindMyClassroom extends JFrame {
     };
 
     DefaultTableModel model =
-        new DefaultTableModel(columns, 0);
+        new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
     boolean found = false;
 
@@ -597,6 +602,8 @@ public class FindMyClassroom extends JFrame {
     JTable table = new JTable(model);
 
     styleTable(table);
+    table.setCellSelectionEnabled(false);
+    table.setRowSelectionAllowed(true);
 
     JButton backButton =
         createButton("BACK", NAVY);
@@ -692,7 +699,12 @@ public class FindMyClassroom extends JFrame {
         };
 
         DefaultTableModel model =
-            new DefaultTableModel(columns, 0);
+            new DefaultTableModel(columns, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
 
         for (Schedule s : schedules) {
 
@@ -710,6 +722,8 @@ public class FindMyClassroom extends JFrame {
         JTable table = new JTable(model);
 
         styleTable(table);
+        table.setCellSelectionEnabled(false);
+        table.setRowSelectionAllowed(true);
 
         JScrollPane scrollPane =
             new JScrollPane(table);
