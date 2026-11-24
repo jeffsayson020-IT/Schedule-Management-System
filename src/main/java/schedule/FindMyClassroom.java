@@ -542,89 +542,82 @@ public class FindMyClassroom extends JFrame {
 
     void showStudentSchedule(String name, String section) {
 
-        getContentPane().removeAll();
+    getContentPane().removeAll();
 
-        JPanel panel = createPanel();
+    JPanel panel = createPanel();
 
-        panel.setLayout(
-            new BorderLayout(10, 10)
-        );
+    panel.setLayout(new BorderLayout(10, 10));
 
-        JLabel title = new JLabel(
-            "CLASS SCHEDULE - " + section,
-            SwingConstants.CENTER
-        );
+    JLabel title = new JLabel(
+        "STUDENT SCHEDULE",
+        SwingConstants.CENTER
+    );
 
-        title.setFont(
-            new Font("Arial", Font.BOLD, 22)
-        );
+    title.setFont(new Font("Arial", Font.BOLD, 22));
+    title.setForeground(NAVY);
 
-        title.setForeground(NAVY);
+    String[] columns = {
+        "Subject", "Teacher", "Section", "Time", "Room"
+    };
 
-        String[] columns = {
-            "Subject", "Teacher", "Time", "Room"
-        };
+    DefaultTableModel model =
+        new DefaultTableModel(columns, 0);
 
-        DefaultTableModel model =
-            new DefaultTableModel(columns, 0);
+    boolean found = false;
 
-        for (Schedule s : schedules) {
+    for (Schedule s : schedules) {
 
-            if (s.section.equalsIgnoreCase(section)) {
+        if (s.section.equalsIgnoreCase(section)) {
 
-                model.addRow(new Object[] {
-                    s.subject,
-                    s.teacher,
-                    s.time,
-                    s.room
-                });
-            }
-        }
+            model.addRow(new Object[] {
+                s.subject,
+                s.teacher,
+                s.section,
+                s.time,
+                s.room
+            });
 
-        JTable table = new JTable(model);
-
-        styleTable(table);
-
-        JScrollPane scrollPane =
-            new JScrollPane(table);
-
-        JButton backButton =
-            createButton("BACK TO MENU", NAVY);
-
-        backButton.addActionListener(
-            e -> mainMenu()
-        );
-
-        JPanel bottom = new JPanel();
-
-        bottom.setBackground(LIGHT);
-
-        bottom.add(backButton);
-
-        panel.setBorder(
-            BorderFactory.createEmptyBorder(
-                15, 15, 15, 15
-            )
-        );
-
-        panel.add(title, BorderLayout.NORTH);
-
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        panel.add(bottom, BorderLayout.SOUTH);
-
-        add(panel);
-
-        refreshScreen();
-
-        if (model.getRowCount() == 0) {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "No schedule found for section: " + section
-            );
+            found = true;
         }
     }
+
+    if (!found) {
+
+        JOptionPane.showMessageDialog(
+            this,
+            "No schedules found for section: " + section,
+            "No Results",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    JTable table = new JTable(model);
+
+    styleTable(table);
+
+    JButton backButton =
+        createButton("BACK", NAVY);
+
+    backButton.addActionListener(
+        e -> studentMenu(name, section)
+    );
+
+    JPanel bottom = new JPanel();
+    bottom.setBackground(LIGHT);
+    bottom.add(backButton);
+
+    panel.setBorder(
+        BorderFactory.createEmptyBorder(15, 15, 15, 15)
+    );
+
+    panel.add(title, BorderLayout.NORTH);
+    panel.add(new JScrollPane(table), BorderLayout.CENTER);
+    panel.add(bottom, BorderLayout.SOUTH);
+
+    add(panel);
+
+    refreshScreen();
+}
 
     // =====================================
     // 14. FACULTY LOGIN
