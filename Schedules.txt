@@ -1,0 +1,24 @@
+Subject: Database Management
+Teacher: Mr. Santos
+Section: BSIT 2A
+Time: 8:00 AM
+Room: Room 304
+-------------------------
+Subject: Programming
+Teacher: Ms. Cruz
+Section: BSIT 2A
+Time: 10:00 AM
+Room: Room 205
+-------------------------
+Subject: Networking
+Teacher: Mr. Reyes
+Section: BSIT 2A
+Time: 1:00 PM
+Room: Room 102
+-------------------------
+Subject: Web Development
+Teacher: Ms. Garcia
+Section: BSIT 2B
+Time: 9:00 AM
+Room: Room 201
+-------------------------

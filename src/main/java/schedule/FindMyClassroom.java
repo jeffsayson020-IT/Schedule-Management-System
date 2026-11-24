@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FindMyClassroom extends JFrame {
 
@@ -159,6 +161,7 @@ public class FindMyClassroom extends JFrame {
     JPanel createPanel() {
 
         JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 1, 10, 10));
 
         panel.setBackground(LIGHT);
 
@@ -599,7 +602,7 @@ public class FindMyClassroom extends JFrame {
         createButton("BACK", NAVY);
 
     backButton.addActionListener(
-        e -> studentMenu(name, section)
+        e -> studentScreen()
     );
 
     JPanel bottom = new JPanel();
@@ -809,6 +812,7 @@ public class FindMyClassroom extends JFrame {
         getContentPane().removeAll();
 
         JPanel panel = createPanel();
+        
 
         panel.setLayout(
             new BoxLayout(panel, BoxLayout.Y_AXIS)
@@ -833,6 +837,13 @@ public class FindMyClassroom extends JFrame {
 
         JButton editButton =
             createButton("EDIT SCHEDULES", GOLD);
+
+       JButton exportButton =
+            createButton("EXPORT SCHEDULES", NAVY);
+
+            exportButton.addActionListener(
+            e -> exportSchedules()
+);
 
         JButton backButton =
             createButton("BACK TO MAIN MENU", RED);
@@ -867,6 +878,10 @@ public class FindMyClassroom extends JFrame {
 
         panel.add(Box.createVerticalStrut(15));
 
+        panel.add(exportButton);
+
+        panel.add(Box.createVerticalStrut(15));
+
         panel.add(backButton);
 
         panel.add(Box.createVerticalGlue());
@@ -875,9 +890,50 @@ public class FindMyClassroom extends JFrame {
 
         refreshScreen();
     }
+    //=====================================
+    // 18. EXPORTS SCHEDULES
+    // =====================================
+
+    static void exportSchedules() {
+        if (schedules.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                null,
+                "There are no schedules to export.",
+                "NO SCHEDULES",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        try (FileWriter writer = new FileWriter("Schedules.txt")) {
+            for (Schedule s : schedules) {
+                writer.write("Subject: " + s.subject + "\n");
+                writer.write("Teacher: " + s.teacher + "\n");
+                writer.write("Section: " + s.section + "\n");
+                writer.write("Time: " + s.time + "\n");
+                writer.write("Room: " + s.room + "\n");
+                writer.write("-------------------------\n");
+            }
+
+            JOptionPane.showMessageDialog(
+                null,
+                "Schedules exported successfully to Schedules.txt",
+                "EXPORT SUCCESSFUL",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Error exporting schedules: " + e.getMessage(),
+                "EXPORT FAILED",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 
     // =====================================
-    // 18. VIEW ALL SCHEDULES
+    // 19. VIEW ALL SCHEDULES
     // =====================================
 
     void viewSchedules() {
