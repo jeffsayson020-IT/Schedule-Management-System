@@ -60,7 +60,23 @@ public class FindMyClassroom extends JFrame {
     setTitle("Find My Classroom System");
     setSize(900, 600);
     setMinimumSize(new Dimension(700, 500));
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent e) {
+
+            int choice = JOptionPane.showConfirmDialog(
+                FindMyClassroom.this,
+                "Are you sure you want to exit?",
+                "Confirm Exit",
+                JOptionPane.YES_NO_OPTION
+            );
+
+            if (choice == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        }
+    });
     setLocationRelativeTo(null);
     setLayout(new BorderLayout());
 
