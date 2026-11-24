@@ -1,14 +1,17 @@
 package schedule;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FindMyClassroom extends JFrame {
 
     // =====================================
-    // SCHOOL COLOR THEME
+    // 1. SCHOOL COLOR THEME
     // =====================================
 
     static final Color NAVY = new Color(23, 54, 93);
@@ -21,7 +24,7 @@ public class FindMyClassroom extends JFrame {
     static final Color RED = new Color(190, 65, 65);
 
     // =====================================
-    // SCHEDULE DATA
+    // 2. SCHEDULE DATA
     // =====================================
 
     static class Schedule {
@@ -50,24 +53,26 @@ public class FindMyClassroom extends JFrame {
     static final String ADMIN_PASSWORD = "1234";
 
     // =====================================
-    // CONSTRUCTOR
+    // 3. CONSTRUCTOR
     // =====================================
 
-    public FindMyClassroom() {
+    FindMyClassroom() {
+    setTitle("Find My Classroom System");
+    setSize(900, 600);
+    setMinimumSize(new Dimension(700, 500));
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLocationRelativeTo(null);
+    setLayout(new BorderLayout());
 
-        setTitle("Find My Classroom System");
-        setSize(750, 550);
-        setMinimumSize(new Dimension(650, 480));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+    addSampleSchedules();
 
-        getContentPane().setBackground(LIGHT);
+    welcomeScreen();
 
-        welcomeScreen();
-    }
+    setVisible(true);
+}
 
     // =====================================
-    // BUTTON DESIGN - FIXED VISIBILITY
+    // 4. BUTTON DESIGN - FIXED VISIBILITY
     // =====================================
 
     JButton createButton(String text, Color color) {
@@ -150,12 +155,13 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // PANEL DESIGN
+    // 5. PANEL DESIGN
     // =====================================
 
     JPanel createPanel() {
 
         JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 1, 10, 10));
 
         panel.setBackground(LIGHT);
 
@@ -163,7 +169,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // TITLE DESIGN
+    // 6. TITLE DESIGN
     // =====================================
 
     JLabel createTitle(String text) {
@@ -182,46 +188,46 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // TABLE DESIGN
+    // 7. TABLE DESIGN
     // =====================================
 
     void styleTable(JTable table) {
+    table.setFont(new Font("Arial", Font.PLAIN, 14));
+    table.setRowHeight(38);
+    table.setForeground(DARK);
+    table.setBackground(WHITE);
 
-        table.setFont(
-            new Font("Arial", Font.PLAIN, 14)
-        );
+    table.setSelectionBackground(BLUE);
+    table.setSelectionForeground(WHITE);
 
-        table.setRowHeight(34);
+    table.setGridColor(new Color(220, 226, 235));
+    table.setShowGrid(true);
+    table.setIntercellSpacing(new Dimension(10, 5));
 
-        table.setBackground(WHITE);
-        table.setForeground(DARK);
+    table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-        table.setSelectionBackground(BLUE);
-        table.setSelectionForeground(WHITE);
+    JTableHeader header = table.getTableHeader();
+    header.setFont(new Font("Arial", Font.BOLD, 14));
+    header.setBackground(NAVY);
+    header.setForeground(WHITE);
+    header.setPreferredSize(new Dimension(header.getWidth(), 42));
+    header.setReorderingAllowed(false);
 
-        table.setGridColor(
-            new Color(220, 226, 235)
-        );
+    DefaultTableCellRenderer centerRenderer =
+        new DefaultTableCellRenderer();
 
-        table.setShowGrid(true);
-        table.setFillsViewportHeight(true);
+    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JTableHeader header = table.getTableHeader();
-
-        header.setBackground(NAVY);
-        header.setForeground(WHITE);
-
-        header.setFont(
-            new Font("Arial", Font.BOLD, 14)
-        );
-
-        header.setPreferredSize(
-            new Dimension(0, 38)
-        );
+    for (int i = 0; i < table.getColumnCount(); i++) {
+        table.getColumnModel()
+             .getColumn(i)
+             .setCellRenderer(centerRenderer);
     }
+}
+
 
     // =====================================
-    // REFRESH SCREEN
+    // 8. REFRESH SCREEN
     // =====================================
 
     void refreshScreen() {
@@ -231,46 +237,50 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // SAMPLE SCHEDULES
+    // 9. SAMPLE SCHEDULES
     // =====================================
 
     static void addSampleSchedules() {
 
-        schedules.add(new Schedule(
-            "Database Management",
-            "Mr. Santos",
-            "BSIT 2A",
-            "8:00 AM",
-            "Room 304"
-        ));
-
-        schedules.add(new Schedule(
-            "Programming",
-            "Ms. Cruz",
-            "BSIT 2A",
-            "10:00 AM",
-            "Room 205"
-        ));
-
-        schedules.add(new Schedule(
-            "Networking",
-            "Mr. Reyes",
-            "BSIT 2A",
-            "1:00 PM",
-            "Room 102"
-        ));
-
-        schedules.add(new Schedule(
-            "Web Development",
-            "Ms. Garcia",
-            "BSIT 2B",
-            "9:00 AM",
-            "Room 201"
-        ));
+    if (!schedules.isEmpty()) {
+        return;
     }
 
+    schedules.add(new Schedule(
+        "Database Management",
+        "Mr. Santos",
+        "BSIT 2A",
+        "8:00 AM",
+        "Room 304"
+    ));
+
+    schedules.add(new Schedule(
+        "Programming",
+        "Ms. Cruz",
+        "BSIT 2A",
+        "10:00 AM",
+        "Room 205"
+    ));
+
+    schedules.add(new Schedule(
+        "Networking",
+        "Mr. Reyes",
+        "BSIT 2A",
+        "1:00 PM",
+        "Room 102"
+    ));
+
+    schedules.add(new Schedule(
+        "Web Development",
+        "Ms. Garcia",
+        "BSIT 2B",
+        "9:00 AM",
+        "Room 201"
+    ));
+}
+
     // =====================================
-    // WELCOME SCREEN
+    // 10. WELCOME SCREEN
     // =====================================
 
     void welcomeScreen() {
@@ -337,7 +347,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // MAIN MENU
+    // 11. MAIN MENU
     // =====================================
 
     void mainMenu() {
@@ -434,7 +444,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // STUDENT SCREEN
+    // 12. STUDENT SCREEN
     // =====================================
 
     void studentScreen() {
@@ -530,97 +540,90 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // STUDENT SCHEDULE
+    // 13. STUDENT SCHEDULE
     // =====================================
 
     void showStudentSchedule(String name, String section) {
 
-        getContentPane().removeAll();
+    getContentPane().removeAll();
 
-        JPanel panel = createPanel();
+    JPanel panel = createPanel();
 
-        panel.setLayout(
-            new BorderLayout(10, 10)
-        );
+    panel.setLayout(new BorderLayout(10, 10));
 
-        JLabel title = new JLabel(
-            "CLASS SCHEDULE - " + section,
-            SwingConstants.CENTER
-        );
+    JLabel title = new JLabel(
+        "STUDENT SCHEDULE",
+        SwingConstants.CENTER
+    );
 
-        title.setFont(
-            new Font("Arial", Font.BOLD, 22)
-        );
+    title.setFont(new Font("Arial", Font.BOLD, 22));
+    title.setForeground(NAVY);
 
-        title.setForeground(NAVY);
+    String[] columns = {
+        "Subject", "Teacher", "Section", "Time", "Room"
+    };
 
-        String[] columns = {
-            "Subject", "Teacher", "Time", "Room"
-        };
+    DefaultTableModel model =
+        new DefaultTableModel(columns, 0);
 
-        DefaultTableModel model =
-            new DefaultTableModel(columns, 0);
+    boolean found = false;
 
-        for (Schedule s : schedules) {
+    for (Schedule s : schedules) {
 
-            if (s.section.equalsIgnoreCase(section)) {
+        if (s.section.equalsIgnoreCase(section)) {
 
-                model.addRow(new Object[] {
-                    s.subject,
-                    s.teacher,
-                    s.time,
-                    s.room
-                });
-            }
-        }
+            model.addRow(new Object[] {
+                s.subject,
+                s.teacher,
+                s.section,
+                s.time,
+                s.room
+            });
 
-        JTable table = new JTable(model);
-
-        styleTable(table);
-
-        JScrollPane scrollPane =
-            new JScrollPane(table);
-
-        JButton backButton =
-            createButton("BACK TO MENU", NAVY);
-
-        backButton.addActionListener(
-            e -> mainMenu()
-        );
-
-        JPanel bottom = new JPanel();
-
-        bottom.setBackground(LIGHT);
-
-        bottom.add(backButton);
-
-        panel.setBorder(
-            BorderFactory.createEmptyBorder(
-                15, 15, 15, 15
-            )
-        );
-
-        panel.add(title, BorderLayout.NORTH);
-
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        panel.add(bottom, BorderLayout.SOUTH);
-
-        add(panel);
-
-        refreshScreen();
-
-        if (model.getRowCount() == 0) {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "No schedule found for section: " + section
-            );
+            found = true;
         }
     }
 
+    if (!found) {
+
+        JOptionPane.showMessageDialog(
+            this,
+            "No schedules found for section: " + section,
+            "No Results",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    JTable table = new JTable(model);
+
+    styleTable(table);
+
+    JButton backButton =
+        createButton("BACK", NAVY);
+
+    backButton.addActionListener(
+        e -> studentScreen()
+    );
+
+    JPanel bottom = new JPanel();
+    bottom.setBackground(LIGHT);
+    bottom.add(backButton);
+
+    panel.setBorder(
+        BorderFactory.createEmptyBorder(15, 15, 15, 15)
+    );
+
+    panel.add(title, BorderLayout.NORTH);
+    panel.add(new JScrollPane(table), BorderLayout.CENTER);
+    panel.add(bottom, BorderLayout.SOUTH);
+
+    add(panel);
+
+    refreshScreen();
+}
+
     // =====================================
-    // FACULTY LOGIN
+    // 14. FACULTY LOGIN
     // =====================================
 
     void facultyLogin() {
@@ -660,7 +663,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // FACULTY SCHEDULE
+    // 15. FACULTY SCHEDULE
     // =====================================
 
     void showFacultySchedule(String facultyName) {
@@ -750,7 +753,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // ADMIN LOGIN
+    // 16. ADMIN LOGIN
     // =====================================
 
     void adminLogin() {
@@ -801,7 +804,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // ADMIN MENU
+    // 17. ADMIN MENU
     // =====================================
 
     void adminMenu() {
@@ -809,6 +812,7 @@ public class FindMyClassroom extends JFrame {
         getContentPane().removeAll();
 
         JPanel panel = createPanel();
+        
 
         panel.setLayout(
             new BoxLayout(panel, BoxLayout.Y_AXIS)
@@ -833,6 +837,13 @@ public class FindMyClassroom extends JFrame {
 
         JButton editButton =
             createButton("EDIT SCHEDULES", GOLD);
+
+       JButton exportButton =
+            createButton("EXPORT SCHEDULES", NAVY);
+
+            exportButton.addActionListener(
+            e -> exportSchedules()
+);
 
         JButton backButton =
             createButton("BACK TO MAIN MENU", RED);
@@ -867,6 +878,10 @@ public class FindMyClassroom extends JFrame {
 
         panel.add(Box.createVerticalStrut(15));
 
+        panel.add(exportButton);
+
+        panel.add(Box.createVerticalStrut(15));
+
         panel.add(backButton);
 
         panel.add(Box.createVerticalGlue());
@@ -875,9 +890,50 @@ public class FindMyClassroom extends JFrame {
 
         refreshScreen();
     }
+    //=====================================
+    // 18. EXPORTS SCHEDULES
+    // =====================================
+
+    static void exportSchedules() {
+        if (schedules.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                null,
+                "There are no schedules to export.",
+                "NO SCHEDULES",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        try (FileWriter writer = new FileWriter("Schedules.txt")) {
+            for (Schedule s : schedules) {
+                writer.write("Subject: " + s.subject + "\n");
+                writer.write("Teacher: " + s.teacher + "\n");
+                writer.write("Section: " + s.section + "\n");
+                writer.write("Time: " + s.time + "\n");
+                writer.write("Room: " + s.room + "\n");
+                writer.write("-------------------------\n");
+            }
+
+            JOptionPane.showMessageDialog(
+                null,
+                "Schedules exported successfully to Schedules.txt",
+                "EXPORT SUCCESSFUL",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Error exporting schedules: " + e.getMessage(),
+                "EXPORT FAILED",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 
     // =====================================
-    // VIEW ALL SCHEDULES
+    // 19. VIEW ALL SCHEDULES
     // =====================================
 
     void viewSchedules() {
@@ -912,6 +968,8 @@ public class FindMyClassroom extends JFrame {
                     return false;
                 }
             };
+
+        sortSchedulesBySubject();    
 
         for (Schedule s : schedules) {
 
@@ -964,7 +1022,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // EDIT SCHEDULES
+    // 19. EDIT SCHEDULES
     // =====================================
 
     void editSchedules() {
@@ -1006,95 +1064,95 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // ADD SCHEDULE
+    // 20. ADD SCHEDULE
     // =====================================
 
-    void addSchedule() {
+   void addSchedule() {
+    JTextField subjectField = new JTextField();
+    JTextField teacherField = new JTextField();
+    JTextField sectionField = new JTextField();
+    JTextField timeField = new JTextField();
+    JTextField roomField = new JTextField();
 
-        JTextField subjectField = new JTextField(18);
-        JTextField teacherField = new JTextField(18);
-        JTextField sectionField = new JTextField(18);
-        JTextField timeField = new JTextField(18);
-        JTextField roomField = new JTextField(18);
+    JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
 
-        JTextField[] fields = {
-            subjectField, teacherField, sectionField,
-            timeField, roomField
-        };
+    panel.add(new JLabel("Subject:"));
+    panel.add(subjectField);
+    panel.add(new JLabel("Teacher:"));
+    panel.add(teacherField);
+    panel.add(new JLabel("Section:"));
+    panel.add(sectionField);
+    panel.add(new JLabel("Time:"));
+    panel.add(timeField);
+    panel.add(new JLabel("Room:"));
+    panel.add(roomField);
 
-        for (JTextField field : fields) {
-            field.setFont(new Font("Arial", Font.PLAIN, 14));
-        }
+    int result = JOptionPane.showConfirmDialog(
+        this, panel, "ADD SCHEDULE",
+        JOptionPane.OK_CANCEL_OPTION,
+        JOptionPane.PLAIN_MESSAGE
+    );
 
-        JLabel[] labels = {
-            new JLabel("Subject:"),
-            new JLabel("Teacher:"),
-            new JLabel("Section:"),
-            new JLabel("Time:"),
-            new JLabel("Room:")
-        };
+    if (result != JOptionPane.OK_OPTION) {
+        return;
+    }
 
-        for (JLabel label : labels) {
-            label.setFont(new Font("Arial", Font.BOLD, 14));
-            label.setForeground(DARK);
-        }
+    String subject = subjectField.getText().trim();
+    String teacher = teacherField.getText().trim();
+    String section = sectionField.getText().trim();
+    String time = timeField.getText().trim();
+    String room = roomField.getText().trim();
 
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
-        panel.setBackground(LIGHT);
-        panel.setBorder(
-            BorderFactory.createEmptyBorder(15, 15, 15, 15)
-        );
-
-        for (int i = 0; i < labels.length; i++) {
-            panel.add(labels[i]);
-            panel.add(fields[i]);
-        }
-
-        int result = JOptionPane.showConfirmDialog(
-            this,
-            panel,
-            "ADD SCHEDULE",
-            JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE
-        );
-
-        if (result != JOptionPane.OK_OPTION) {
-            return;
-        }
-
-        String subject = subjectField.getText().trim();
-        String teacher = teacherField.getText().trim();
-        String section = sectionField.getText().trim();
-        String time = timeField.getText().trim();
-        String room = roomField.getText().trim();
-
-        if (subject.isEmpty() || teacher.isEmpty()
-                || section.isEmpty() || time.isEmpty()
-                || room.isEmpty()) {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "Please complete all schedule fields.",
-                "MISSING INFORMATION",
-                JOptionPane.WARNING_MESSAGE
-            );
-            return;
-        }
-
-        schedules.add(
-            new Schedule(subject, teacher, section, time, room)
-        );
+    if (subject.isEmpty() || teacher.isEmpty()
+            || section.isEmpty() || time.isEmpty()
+            || room.isEmpty()) {
 
         JOptionPane.showMessageDialog(
             this,
-            "Schedule added successfully!",
-            "SUCCESS",
-            JOptionPane.INFORMATION_MESSAGE
+            "Unable to add schedule.\n\n"
+            + "Please complete all required fields:\n"
+            + "- Subject\n- Teacher\n- Section\n- Time\n- Room",
+            "INPUT ERROR",
+            JOptionPane.ERROR_MESSAGE
         );
+        return;
     }
 
+    for (Schedule s : schedules) {
+        if (s.subject.equalsIgnoreCase(subject)
+                && s.teacher.equalsIgnoreCase(teacher)
+                && s.section.equalsIgnoreCase(section)
+                && s.time.equalsIgnoreCase(time)
+                && s.room.equalsIgnoreCase(room)) {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "This schedule already exists.\n"
+                + "Please check the schedule details.",
+                "DUPLICATE SCHEDULE",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+    }
+
+    schedules.add(new Schedule(subject, teacher, section, time, room));
+
+    JOptionPane.showMessageDialog(
+        this,
+        "The new schedule has been added successfully!\n\n"
+        + "Subject: " + subject + "\n"
+        + "Teacher: " + teacher + "\n"
+        + "Section: " + section + "\n"
+        + "Time: " + time + "\n"
+        + "Room: " + room,
+        "SCHEDULE ADDED",
+        JOptionPane.INFORMATION_MESSAGE
+    );
+}
+
     // =====================================
-    // UPDATE SCHEDULE
+    // 21. UPDATE SCHEDULE
     // =====================================
 
     void updateSchedule() {
@@ -1258,7 +1316,7 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // DELETE SCHEDULE
+    // 22. DELETE SCHEDULE
     // =====================================
 
     void deleteSchedule() {
@@ -1343,7 +1401,17 @@ public class FindMyClassroom extends JFrame {
     }
 
     // =====================================
-    // MAIN METHOD
+    // SORT SCHEDULES BY SUBJECT
+    // =====================================
+
+void sortSchedulesBySubject() {
+    schedules.sort(
+        (s1, s2) -> s1.subject.compareToIgnoreCase(s2.subject)
+    );
+}
+
+    // =====================================
+    // 23. MAIN METHOD
     // =====================================
 
     public static void main(String[] args) {
