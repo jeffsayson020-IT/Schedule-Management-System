@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FindMyClassroom extends JFrame {
 
@@ -599,7 +601,7 @@ public class FindMyClassroom extends JFrame {
         createButton("BACK", NAVY);
 
     backButton.addActionListener(
-        e -> studentMenu(name, section)
+        e -> studentScreen()
     );
 
     JPanel bottom = new JPanel();
